@@ -3,14 +3,14 @@ import { Grid, GridColumn } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import ActivityDetailInfo from './ActivityDetailInfo';
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import ProductDetailInfo from './ProductDetailInfo';
 
 interface DetailParams {
   id: string;
 }
 
-const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
+const ProductDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
   const rootStore = useContext(RootStoreContext);
   const { selectedProduct: activity, loadActivity, loadingInitial } = rootStore.productStore;
   useEffect(() => {
@@ -23,10 +23,10 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, h
   return (
     <Grid>
       <GridColumn width={10}>
-        <ActivityDetailInfo product={activity} />
+        <ProductDetailInfo product={activity} />
       </GridColumn>
     </Grid>
   );
 };
 
-export default observer(ActivityDetails);
+export default observer(ProductDetails);

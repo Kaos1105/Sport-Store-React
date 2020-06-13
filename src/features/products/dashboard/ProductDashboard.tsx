@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
-import ActivityList from './ActivityList';
+import ActivityList from './ProductList';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 
 //pass down props from parent
 
-const ActivityDashboard: React.FC = () => {
+const ProductDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { loadActivities, loadingInitial } = rootStore.productStore;
   // Similar to componentDidMount and componentDidUpdate:
@@ -44,4 +44,4 @@ const ActivityDashboard: React.FC = () => {
   );
 };
 
-export default observer(ActivityDashboard);
+export default observer(ProductDashboard);
