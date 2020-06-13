@@ -18,10 +18,6 @@ import { RootStoreContext } from '../../../app/stores/rootStore';
 const validate = combineValidators({
   name: isRequired('Name'),
   category: isRequired('Category'),
-  description: composeValidators(
-    isRequired('Description'),
-    hasLengthGreaterThan(4)({ message: 'Description needs to be at least 5 characters' })
-  )(),
   brand: isRequired('Brand'),
   price: isRequired('Price'),
   importPrice: isRequired('Import Price'),
@@ -83,13 +79,6 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                   component={SelectInput}
                   options={category}
                 />
-                <Field
-                  name='description'
-                  placeholder='Description'
-                  value={product.description}
-                  rows={3}
-                  component={TextAreaInput}
-                />
                 <Form.Group widths='equal'>
                   <Field
                     name='date'
@@ -100,7 +89,6 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                     component={DateInput}
                   />
                 </Form.Group>
-
                 <Field
                   name='stock'
                   placeholder='Stock'

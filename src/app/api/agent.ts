@@ -1,24 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
 import { history } from '../..';
 import { toast } from 'react-toastify';
-import { IProduct } from '../models/product';
+import { IProduct, IProductEnvelope } from '../models/product';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
-import { product as products } from '../common/sample/productSeedDb';
 
-axios.defaults.baseURL = 'https://localhost:5001/api';
+axios.defaults.baseURL = 'http://localhost:8080/SportsStore-1.0/rest';
 
 //add token to request header
-axios.interceptors.request.use(
-  (config) => {
-    const token = window.localStorage.getItem('jwt');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.request.use(
+//   (config) => {
+//     const token = window.localStorage.getItem('jwt');
+//     if (token) config.headers.Authorization = `Bearer ${token}`;
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 //error handle from response
 axios.interceptors.response.use(undefined, (error) => {
@@ -65,22 +64,12 @@ const requests = {
   },
 };
 
-var tempTable = products;
-
 const Product = {
-  //list: (): Promise<IProduct[]> => requests.get('/products'),
-  list: (): IProduct[] => tempTable,
-  //details: (id: string) => requests.get(`/products/${id}`),
-  details: (id: string) => tempTable.filter((x) => x.id != id),
-  //create: (product: IProduct) => requests.post('/products', product),
-  create: (product: IProduct) => ({ ...tempTable, product }),
-  //update: (product: IProduct) => requests.put(`/products/${product.id}`, product),
-  update: (product: IProduct) =>
-    tempTable.map((x) => {
-      if (x.id == product.id) x = product;
-    }),
-  //delete: (id: string) => requests.delete(`/products/${id}`),
-  delete: (id: string) => tempTable.filter((x) => x.id != id),
+  list: (): Promise<IProductEnvelope> => requests.get('/products'),
+  details: (id: string) => requests.get(`/products/${id}`),
+  create: (product: IProduct) => requests.post('/products', product),
+  update: (product: IProduct) => requests.put(`/products/${product.id}`, product),
+  delete: (id: string) => requests.delete(`/products/${id}`),
 };
 
 export default {

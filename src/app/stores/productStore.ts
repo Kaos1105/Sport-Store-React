@@ -31,7 +31,7 @@ export default class ActivityStore {
     this.loadingInitial = true;
 
     try {
-      const products = await agent.Product.list();
+      const products = await (await agent.Product.list()).products;
 
       runInAction('loading products', () => {
         products.forEach((product) => {

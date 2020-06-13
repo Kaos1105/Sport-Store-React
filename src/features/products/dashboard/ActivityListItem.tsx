@@ -34,13 +34,14 @@ const ActivityListItem: React.FC<{ product: IProduct }> = ({ product }) => {
       </Segment>
       <Segment>
         <Icon name='clock' />
-        {format(product.dateAdded, 'dd/mm/yyy')}
-        <Icon name='marker' />
-        {product.price}, {product.importPrice}
+        {product.dateAdded}
       </Segment>
       <Segment secondary>{product.brand}</Segment>
       <Segment clearing>
-        <span>{product.description}</span>
+        <Icon name='dollar sign' />
+        {product.importPrice}
+        <Icon name='dollar sign' />
+        {product.price}
         <Button
           // onClick={() => selectActivity(activity.id)}
           as={Link}

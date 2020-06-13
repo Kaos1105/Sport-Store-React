@@ -1,8 +1,11 @@
+export interface IProductEnvelope {
+  products: IProduct[];
+}
+
 export interface IProduct {
   id: string;
   name: string;
   category: string;
-  description: string;
   brand: string;
   price: number;
   importPrice: number;

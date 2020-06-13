@@ -10,9 +10,11 @@ const ActivityDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
         <Grid>
           <Grid.Column width={1}>
             <Icon size='large' color='teal' name='info' />
+            <p>{product.name}</p>
           </Grid.Column>
           <Grid.Column width={15}>
-            <p>{product.description}</p>
+            <p>{product.category}</p>
+            <p>{product.brand}</p>
           </Grid.Column>
         </Grid>
       </Segment>
@@ -21,9 +23,7 @@ const ActivityDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
           <Grid.Column width={1}>
             <Icon name='calendar' size='large' color='teal' />
           </Grid.Column>
-          <Grid.Column width={15}>
-            <span>{format(product.dateAdded, 'eeee do MMMM')}</span>
-          </Grid.Column>
+          <Grid.Column width={15}>{product.dateAdded}</Grid.Column>
         </Grid>
       </Segment>
       <Segment attached>
