@@ -93,7 +93,7 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                   <Field
                     name='dateAdded'
                     date={true}
-                    placeholder='DateAdded'
+                    placeholder='Date Added'
                     value={product.dateAdded}
                     //{...console.log(activity.date)}
                     component={DateInput}

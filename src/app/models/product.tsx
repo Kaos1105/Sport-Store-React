@@ -30,11 +30,6 @@ export class ProductFormValues implements IProductFormValues {
       // Do NOT FUCKING CHANGE OBJECT OUTSIDE MOBX
       //init.time=init.date
       this.dateAdded = init.dateAdded;
-    } else {
-      var today = new Date();
-      var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
-      var result = new Date(Date.parse(date));
-      this.dateAdded = result;
     }
     Object.assign(this, init);
   }

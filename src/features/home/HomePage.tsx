@@ -1,12 +1,12 @@
-import React, { useContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Container, Segment, Header, Button, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { RootStoreContext } from '../../app/stores/rootStore';
+//import { RootStoreContext } from '../../app/stores/rootStore';
 // import LoginForm from '../user/LoginForm';
 // import RegisterForm from '../user/RegisterForm';
 
 const HomePage = () => {
-  const rootStore = useContext(RootStoreContext);
+  //const rootStore = useContext(RootStoreContext);
   // const { isLoggedIn, user } = rootStore.userStore;
   // const { openModal } = rootStore.modalStore;
 

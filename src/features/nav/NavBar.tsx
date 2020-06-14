@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { Menu, Container, Button, Dropdown, Image } from 'semantic-ui-react';
+import React from 'react';
+import { Menu, Container, Button } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
-import { NavLink, Link } from 'react-router-dom';
-import { RootStoreContext } from '../../app/stores/rootStore';
+import { NavLink } from 'react-router-dom';
+//import { RootStoreContext } from '../../app/stores/rootStore';
 
 const NavBar: React.FC = () => {
-  const rootStore = useContext(RootStoreContext);
+  //const rootStore = useContext(RootStoreContext);
   //const { user, logout } = rootStore.userStore;
 
   return (
