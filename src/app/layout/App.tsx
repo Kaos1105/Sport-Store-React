@@ -33,10 +33,10 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
             <Container style={{ marginTop: '7em' }}>
               <Switch>
                 <Route exact path='/products' component={ProductDashboard} />
-                <Route path='/products/:id' component={ProductDetails} />
+                <Route exact path='/products/:id' component={ProductDetails} />
                 <Route
                   key={location.key}
-                  path={['/products/create', '/products/manage/:id']}
+                  path={['/createProduct', '/products/:id/manage']}
                   component={ProductForm}
                 />
                 <Route component={NotFound} />

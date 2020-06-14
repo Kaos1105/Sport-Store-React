@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Segment, Form, Button, Grid } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid, Label } from 'semantic-ui-react';
 import { ProductFormValues } from '../../../app/models/product';
 import { v4 as uuid } from 'uuid';
 import { observer } from 'mobx-react-lite';
@@ -71,7 +71,9 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
             onSubmit={handleFinalFormSubmit}
             render={({ handleSubmit, invalid, pristine }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
+                <Label>Name</Label>
                 <Field name='name' placeholder='Name' value={product.name} component={TextInput} />
+                <Label>Category</Label>
                 <Field
                   name='category'
                   placeholder='Category'
@@ -79,28 +81,40 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                   component={SelectInput}
                   options={category}
                 />
+                <Label>Brand</Label>
+                <Field
+                  name='brand'
+                  placeholder='Brand'
+                  value={product.brand}
+                  component={SelectInput}
+                  options={category}
+                />
+                <Label>Date Aded</Label>
                 <Form.Group widths='equal'>
                   <Field
-                    name='date'
+                    name='dateAdded'
                     date={true}
-                    placeholder='Date'
+                    placeholder='DateAdded'
                     value={product.dateAdded}
                     //{...console.log(activity.date)}
                     component={DateInput}
                   />
                 </Form.Group>
+                <Label>Stock</Label>
                 <Field
                   name='stock'
                   placeholder='Stock'
                   value={product.stock}
                   component={NumberInput}
                 />
+                <Label>Price</Label>
                 <Field
                   name='price'
                   placeholder='Price'
                   value={product.price}
                   component={NumberInput}
                 />
+                <Label>Import Price</Label>
                 <Field
                   name='importPrice'
                   placeholder='Import Price'
