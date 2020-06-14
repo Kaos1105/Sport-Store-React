@@ -1,10 +1,12 @@
 import React from 'react';
-import { Segment, Grid, Icon, Label, Button, GridColumn } from 'semantic-ui-react';
+import { Segment, Grid, Icon, Label, Button } from 'semantic-ui-react';
 import { IProduct } from '../../../app/models/product';
-import { format } from 'date-fns';
+import { format, zonedTimeToUtc } from 'date-fns-tz';
 import { Link } from 'react-router-dom';
 
 const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
+  const timeZone = 'Asia/Bangkok';
+  const utcDate = zonedTimeToUtc(product.dateAdded, timeZone);
   return (
     <Segment.Group key={product.id}>
       <Segment attached='top'>
@@ -27,12 +29,12 @@ const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
       </Segment>
       <Segment>
         <Grid>
-          <Grid.Column width={5}>
+          <Grid.Column width={10}>
             <Icon size='large' color='teal' name='bookmark outline' />
             <span>Product Category: {product.category}</span>
           </Grid.Column>
-          <Grid.Column width={5}>
-            <Icon size='large' color='teal' name='amazon' />
+          <Grid.Column width={10}>
+            <Icon size='large' color='teal' name='steam' />
             <span>Product Brand: {product.brand}</span>
           </Grid.Column>
         </Grid>
@@ -42,17 +44,26 @@ const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
           <Grid.Column width={15}>
             {' '}
             <Icon name='calendar' size='large' color='teal' />
-            Date added: {product.dateAdded}
+            Date added: {format(utcDate, 'MM/dd/yyyy', { timeZone: 'Asia/Bangkok' })}
           </Grid.Column>
         </Grid>
       </Segment>
       <Segment attached>
         <Grid verticalAlign='middle'>
-          <Grid.Column width={11}>
+          <Grid.Column width={15}>
+            {' '}
+            <Icon name='unordered list' size='large' color='teal' />
+            Stock: {product.stock}
+          </Grid.Column>
+        </Grid>
+      </Segment>
+      <Segment attached>
+        <Grid>
+          <Grid.Column width={5}>
             <Icon name='dollar sign' size='large' color='teal' />
             <span>Import price: {product.importPrice}</span>
           </Grid.Column>
-          <Grid.Column width={11}>
+          <Grid.Column width={5}>
             <Icon name='dollar sign' size='large' color='teal' />
             <span>Price: {product.price}</span>
           </Grid.Column>

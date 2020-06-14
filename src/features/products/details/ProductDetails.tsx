@@ -12,10 +12,10 @@ interface DetailParams {
 
 const ProductDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
   const rootStore = useContext(RootStoreContext);
-  const { selectedProduct: activity, loadActivity, loadingInitial } = rootStore.productStore;
+  const { selectedProduct: activity, loadProduct, loadingInitial } = rootStore.productStore;
   useEffect(() => {
-    loadActivity(match.params.id);
-  }, [loadActivity, match.params.id, history]);
+    loadProduct(match.params.id);
+  }, [loadProduct, match.params.id, history]);
 
   if (loadingInitial) return <LoadingComponent content='Loading activity...' />;
   if (!activity) return <h2>Activity not found</h2>;

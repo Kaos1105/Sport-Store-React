@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
-import { Item, Button, Label, Segment, Icon, Image, Table } from 'semantic-ui-react';
+import { Button, Label, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-//import ActivityStore from '../../../app/stores/activityStore';
 import { IProduct } from '../../../app/models/product';
-import { format } from 'date-fns';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 
@@ -94,7 +92,6 @@ const ProductListItem: React.FC<{ product: IProduct }> = ({ product }) => {
           />
           <Button
             name={product.id}
-            {...console.log(targetDelete === product.id.toString() && submitting)}
             loading={targetDelete === product.id.toString() && submitting}
             onClick={(e) => deleteProduct(e, product.id)}
             content='Delete'

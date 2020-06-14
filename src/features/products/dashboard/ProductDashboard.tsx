@@ -9,12 +9,12 @@ import { RootStoreContext } from '../../../app/stores/rootStore';
 
 const ProductDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { loadActivities, loadingInitial } = rootStore.productStore;
+  const { loadProducts, loadingInitial } = rootStore.productStore;
   // Similar to componentDidMount and componentDidUpdate:
   // first parameter is componentDidMount, second is componentDidUpdate with return similar to componentUnMount
   useEffect(() => {
-    loadActivities();
-  }, [loadActivities]);
+    loadProducts();
+  }, [loadProducts]);
 
   if (loadingInitial) return <LoadingComponent content={'Loading component...'} />;
 

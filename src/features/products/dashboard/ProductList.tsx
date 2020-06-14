@@ -1,9 +1,8 @@
 import React, { useContext, Fragment } from 'react';
-import { Item, Label, Table } from 'semantic-ui-react';
+import { Item, Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import ProductListItem from './ProductListItem';
 import { RootStoreContext } from '../../../app/stores/rootStore';
-import { format } from 'date-fns';
 
 const ProductList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);

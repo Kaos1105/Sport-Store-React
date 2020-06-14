@@ -23,7 +23,7 @@ export class ProductFormValues implements IProductFormValues {
   price: number = 0;
   importPrice: number = 0;
   stock: number = 0;
-  dateAdded: Date = new Date();
+  dateAdded?: Date = undefined;
 
   constructor(init?: IProductFormValues) {
     if (init && init.dateAdded) {

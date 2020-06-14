@@ -1,28 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Segment, Form, Button, Grid, Label } from 'semantic-ui-react';
 import { ProductFormValues } from '../../../app/models/product';
-import { v4 as uuid } from 'uuid';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput';
 import NumberInput from '../../../app/common/form/NumberInput';
-import TextAreaInput from '../../../app/common/form/TextAreaInput';
-import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
-import { category } from '../../../app/common/sample/categoryOptions';
-import { combineDateAndTime } from '../../../app/common/util/util';
-import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
+import { combineValidators, isRequired, composeValidators, isNumeric } from 'revalidate';
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 
 const validate = combineValidators({
   name: isRequired('Name'),
   category: isRequired('Category'),
   brand: isRequired('Brand'),
-  price: isRequired('Price'),
-  importPrice: isRequired('Import Price'),
-  stock: isRequired('Stock'),
-  date: isRequired('Date'),
+  price: composeValidators(isRequired('Price'), isNumeric('Price'))(),
+  importPrice: composeValidators(isRequired('ImportPrice'), isNumeric('ImportPrice'))(),
+  stock: composeValidators(isRequired('Stock'), isNumeric('Stock'))(),
+  dateAdded: isRequired('Date'),
 });
 
 interface DetailParams {
@@ -30,8 +26,9 @@ interface DetailParams {
 }
 
 const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
+  const timeZone = 'Asia/Bangkok';
   const rootStore = useContext(RootStoreContext);
-  const { createProduct, editProduct, submitting, loadActivity } = rootStore.productStore;
+  const { createProduct, editProduct, submitting, loadProduct } = rootStore.productStore;
 
   const [product, setProduct] = useState(new ProductFormValues());
   const [loading, setLoading] = useState(false);
@@ -39,24 +36,28 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
-      loadActivity(match.params.id)
-        .then((activity) => setProduct(new ProductFormValues(activity)))
+      loadProduct(match.params.id)
+        .then((product) => {
+          let utcDate = zonedTimeToUtc(product.dateAdded, timeZone);
+          let dateAdded = utcToZonedTime(utcDate, timeZone);
+          let result = new ProductFormValues(product);
+          result.dateAdded = dateAdded;
+          setProduct(new ProductFormValues(result));
+        })
         .finally(() => setLoading(false));
     }
-  }, [loadActivity, match.params.id]);
+  }, [loadProduct, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
-    const dateAndTIme = combineDateAndTime(values.date, values.time);
-    const { date, time, ...activity } = values;
-    activity.date = dateAndTIme;
-    if (!activity.id) {
-      let newActivity = {
-        ...activity,
-        id: uuid(),
+    const { ...product } = values;
+    if (!product.id) {
+      let newProduct = {
+        ...product,
+        id: '',
       };
-      createProduct(newActivity);
+      createProduct(newProduct);
     } else {
-      editProduct(activity);
+      editProduct(product);
     }
     //console.log(activity);
   };
@@ -78,16 +79,14 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                   name='category'
                   placeholder='Category'
                   value={product.category}
-                  component={SelectInput}
-                  options={category}
+                  component={TextInput}
                 />
                 <Label>Brand</Label>
                 <Field
                   name='brand'
                   placeholder='Brand'
                   value={product.brand}
-                  component={SelectInput}
-                  options={category}
+                  component={TextInput}
                 />
                 <Label>Date Aded</Label>
                 <Form.Group widths='equal'>
@@ -124,6 +123,7 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                 <Button
                   loading={submitting}
                   disabled={loading || pristine || invalid}
+                  {...console.log(pristine, invalid)}
                   floated='right'
                   positive
                   type='submit'

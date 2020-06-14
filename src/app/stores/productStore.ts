@@ -27,7 +27,7 @@ export default class ActivityStore {
   @observable targetDelete = '';
 
   //List
-  @action loadActivities = async () => {
+  @action loadProducts = async () => {
     this.loadingInitial = true;
 
     try {
@@ -48,7 +48,7 @@ export default class ActivityStore {
   };
 
   //Detail
-  @action loadActivity = async (id: string) => {
+  @action loadProduct = async (id: string) => {
     let product = this.getProduct(id);
     if (product) {
       this.selectedProduct = product;
