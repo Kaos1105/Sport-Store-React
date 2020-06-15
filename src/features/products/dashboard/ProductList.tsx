@@ -14,16 +14,18 @@ const ProductList: React.FC = () => {
         <Table key='table data' celled>
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell>Index</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>Category</Table.HeaderCell>
               <Table.HeaderCell>Brand</Table.HeaderCell>
+              <Table.HeaderCell>Stock</Table.HeaderCell>
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
-            {lstProduct.map((product) => (
-              <ProductListItem key={product.id} product={product} />
+            {lstProduct.map((product, index) => (
+              <ProductListItem key={product.id} product={product} index={index + 1} />
             ))}
           </Table.Body>
         </Table>

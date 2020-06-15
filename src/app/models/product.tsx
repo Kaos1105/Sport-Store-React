@@ -1,5 +1,6 @@
 export interface IProductEnvelope {
   products: IProduct[];
+  resultCount: number;
 }
 
 export interface IProduct {

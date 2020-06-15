@@ -1,10 +1,12 @@
-import { observable, action, runInAction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import { SyntheticEvent } from 'react';
 import { IProduct } from '../models/product';
 import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
+
+const LIMIT = 5;
 
 export default class ActivityStore {
   _rootStore: RootStore;
@@ -14,6 +16,7 @@ export default class ActivityStore {
 
   //Observable map
   @observable productRegistry = new Map();
+
   //List
   @observable loadingInitial = false;
 
@@ -26,17 +29,31 @@ export default class ActivityStore {
   //Delete
   @observable targetDelete = '';
 
+  //Paging
+  @observable productCount = 0;
+  @observable page = 1;
+
+  @computed get totalPages() {
+    return Math.ceil(this.productCount / LIMIT);
+  }
+
+  @action setPages = (page: number) => {
+    this.page = page;
+  };
+
   //List
   @action loadProducts = async () => {
     this.loadingInitial = true;
 
     try {
-      const products = await (await agent.Product.list()).products;
-
+      const productEnvelope = await await agent.Product.list(LIMIT, this.page);
+      const { products, resultCount } = productEnvelope;
       runInAction('loading products', () => {
+        this.productRegistry.clear();
         products.forEach((product) => {
           this.productRegistry.set(product.id, product);
         });
+        this.productCount = resultCount;
       });
     } catch (error) {
       console.log(error);

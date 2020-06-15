@@ -5,7 +5,7 @@ import { IProduct } from '../../../app/models/product';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 
-const ProductListItem: React.FC<{ product: IProduct }> = ({ product }) => {
+const ProductListItem: React.FC<{ product: IProduct; index: number }> = ({ product, index }) => {
   const rootStore = useContext(RootStoreContext);
   const { deleteProduct, submitting, targetDelete } = rootStore.productStore;
   return (
@@ -67,6 +67,7 @@ const ProductListItem: React.FC<{ product: IProduct }> = ({ product }) => {
     // </Segment.Group>
     //#endregion oldUI
     <Table.Row key={product.id}>
+      <Table.Cell>{index}</Table.Cell>
       <Table.Cell>
         <Label color='green' key={product.id} size='large' as={Link} to={`/products/${product.id}`}>
           {product.name}
@@ -74,6 +75,7 @@ const ProductListItem: React.FC<{ product: IProduct }> = ({ product }) => {
       </Table.Cell>
       <Table.Cell>{product.category}</Table.Cell>
       <Table.Cell>{product.brand}</Table.Cell>
+      <Table.Cell>{product.stock}</Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
           <Button

@@ -65,7 +65,8 @@ const requests = {
 };
 
 const Product = {
-  list: (): Promise<IProductEnvelope> => requests.get('/products'),
+  list: (limit?: number, page?: number): Promise<IProductEnvelope> =>
+    requests.get(`/products?offset=${page ? (page - 1) * limit! : 0}&limit=${limit}`),
   details: (id: string) => requests.get(`/products/${id}`),
   create: (product: IProduct) => requests.post('/products', product),
   update: (product: IProduct) => requests.put(`/products/${product.id}`, product),

@@ -123,7 +123,6 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                 <Button
                   loading={submitting}
                   disabled={loading || pristine || invalid}
-                  {...console.log(pristine, invalid)}
                   floated='right'
                   positive
                   type='submit'
