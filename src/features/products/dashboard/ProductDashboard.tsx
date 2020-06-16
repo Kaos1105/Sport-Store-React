@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useContext, useEffect, Fragment, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import ActivityList from './ProductList';
 import { observer } from 'mobx-react-lite';
@@ -11,6 +11,12 @@ import PaginationProduct from '../../paginate/PaginationProduct';
 const ProductDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { loadProducts, loadingInitial } = rootStore.productStore;
+  const [loadingNext, setLoadingNext] = useState(false);
+
+  const handleGetNext = () => {
+    setLoadingNext(true);
+    loadProducts().then(() => setLoadingNext(false));
+  };
 
   // Similar to componentDidMount and componentDidUpdate:
   // first parameter is componentDidMount, second is componentDidUpdate with return similar to componentUnMount
@@ -22,9 +28,9 @@ const ProductDashboard: React.FC = () => {
 
   return (
     <Fragment>
-      <PaginationProduct />
+      <PaginationProduct handlePageChange={handleGetNext} />
       <Grid>
-        <Grid.Column width='10'>
+        <Grid.Column width='16'>
           {
             // <List>
             //   {activities.map((activity) => (
@@ -34,7 +40,7 @@ const ProductDashboard: React.FC = () => {
             <ActivityList />
           }
         </Grid.Column>
-        <Grid.Column width='6'>
+        <Grid.Column width='4'>
           {/* only render if selectedActivity is not null */}
           {/* {selectedActivity && !editMode && <ActivityDetails />}
         {editMode && (

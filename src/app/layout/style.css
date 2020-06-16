@@ -49,4 +49,7 @@ code {
   font-weight: normal;
 }
 
+.ui.pagination.menu {
+  margin-bottom: 1em;
+}
 /*end home page styles*/

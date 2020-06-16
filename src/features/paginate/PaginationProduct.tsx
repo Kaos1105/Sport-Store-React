@@ -1,24 +1,23 @@
-import React, { useContext, Fragment, useState } from 'react';
+import React, { useContext } from 'react';
 import { Pagination } from 'semantic-ui-react';
 import { RootStoreContext } from '../../app/stores/rootStore';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
-interface IProps {}
+interface IProps {
+  handlePageChange: () => void;
+}
 
-const PaginationProduct: React.FC<IProps> = ({}) => {
+const PaginationProduct: React.FC<IProps> = ({ handlePageChange }) => {
   const rootStore = useContext(RootStoreContext);
-  const { loadProducts, setPages, page, totalPages } = rootStore.productStore;
-  const [loadingPage, setLoadingPage] = useState(false);
+  const { setPages, page, totalPages } = rootStore.productStore;
 
   return (
     <Pagination
       defaultActivePage={page}
       totalPages={totalPages}
       onPageChange={(e, { activePage }) => {
-        setLoadingPage(true);
         setPages(parseInt(activePage!.toString()));
-        loadProducts().then(() => setLoadingPage(false));
+        handlePageChange();
       }}
     />
   );

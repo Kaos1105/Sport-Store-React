@@ -51,10 +51,10 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
 // };
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(500)).then(responseBody),
-  post: (url: string, body: {}) => axios.post(url, body).then(sleep(500)).then(responseBody),
-  put: (url: string, body: {}) => axios.put(url, body).then(sleep(500)).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(sleep(500)).then(responseBody),
+  get: (url: string) => axios.get(url).then(sleep(400)).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(sleep(400)).then(responseBody),
+  put: (url: string, body: {}) => axios.put(url, body).then(sleep(400)).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(sleep(400)).then(responseBody),
   postForm: (url: string, file: Blob) => {
     let formData = new FormData();
     formData.append('File', file);
@@ -65,8 +65,8 @@ const requests = {
 };
 
 const Product = {
-  list: (limit?: number, page?: number): Promise<IProductEnvelope> =>
-    requests.get(`/products?offset=${page ? (page - 1) * limit! : 0}&limit=${limit}`),
+  list: (params: URLSearchParams): Promise<IProductEnvelope> =>
+    axios.get('/products', { params: params }).then(sleep(400)).then(responseBody),
   details: (id: string) => requests.get(`/products/${id}`),
   create: (product: IProduct) => requests.post('/products', product),
   update: (product: IProduct) => requests.put(`/products/${product.id}`, product),

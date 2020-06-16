@@ -3,6 +3,7 @@ import { Item, Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import ProductListItem from './ProductListItem';
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import ProductSearch from './ProductSearch';
 
 const ProductList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -24,6 +25,7 @@ const ProductList: React.FC = () => {
           </Table.Header>
 
           <Table.Body>
+            <ProductSearch></ProductSearch>
             {lstProduct.map((product, index) => (
               <ProductListItem key={product.id} product={product} index={index + 1} />
             ))}

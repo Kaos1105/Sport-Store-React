@@ -1,17 +1,38 @@
-import { observable, action, runInAction, computed } from 'mobx';
+import { observable, action, runInAction, computed, reaction } from 'mobx';
 import { SyntheticEvent } from 'react';
 import { IProduct } from '../models/product';
 import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
+import { category } from '../common/sample/categoryOptions';
 
 const LIMIT = 5;
+//export var categoryOptions: category[];
+//var categoryOptions: String[];
+//var brandOptions: String[];
 
-export default class ActivityStore {
+export default class ProductStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
+
+    reaction(
+      () => this.predicate.keys(),
+      () => {
+        if (this.predicate.get('final') === 'true') {
+          this.page = 1;
+          this.productRegistry.clear();
+          this.loadProducts();
+          this.predicate.clear();
+        } else if (this.predicate.get('final') === 'false') {
+          this.page = 1;
+          this.productRegistry.clear();
+          this.loadProducts();
+          this.predicate.clear();
+        }
+      }
+    );
   }
 
   //Observable map
@@ -41,19 +62,37 @@ export default class ActivityStore {
     this.page = page;
   };
 
+  //Filtering
+  @observable predicate = new Map();
+  @action setPredicate = (predicate: string, value: string | number) => {
+    //this.predicate.clear();
+    this.predicate.set(predicate, value);
+  };
+  @computed get axiosParams() {
+    const params = new URLSearchParams();
+    params.append('limit', String(LIMIT));
+    params.append('offset', `${this.page ? (this.page - 1) * LIMIT : 0}`);
+    this.predicate.forEach((value, key) => {
+      if (key !== 'final') params.append(key, value);
+    });
+    return params;
+  }
+
+  //Filtering option
+
   //List
   @action loadProducts = async () => {
     this.loadingInitial = true;
 
     try {
-      const productEnvelope = await await agent.Product.list(LIMIT, this.page);
+      const productEnvelope = await await agent.Product.list(this.axiosParams);
       const { products, resultCount } = productEnvelope;
       runInAction('loading products', () => {
         this.productRegistry.clear();
-        products.forEach((product) => {
+        this.productCount = resultCount;
+        products.map((product) => {
           this.productRegistry.set(product.id, product);
         });
-        this.productCount = resultCount;
       });
     } catch (error) {
       console.log(error);
