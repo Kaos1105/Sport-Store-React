@@ -1,15 +1,19 @@
 import { observer } from 'mobx-react-lite';
-import { useContext, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Table, Button, Dropdown, Icon } from 'semantic-ui-react';
 import React from 'react';
 import { RootStoreContext } from '../../../app/stores/rootStore';
-import { category } from '../../../app/common/sample/categoryOptions';
 
 interface IProps {}
 
 const ProductSearch: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { predicate, setPredicate } = rootStore.productStore;
+  const { setPredicate } = rootStore.productStore;
+  const { loadOptions, categoryOptionsRegistry, brandOptionsRegistry } = rootStore.productOptions;
+
+  useEffect(() => {
+    loadOptions();
+  }, [loadOptions]);
 
   return (
     <Table.Row key='searchRow'>
@@ -26,10 +30,30 @@ const ProductSearch: React.FC<IProps> = () => {
         </div>
       </Table.Cell>
       <Table.Cell>
-        <Dropdown fluid={false} placeholder='Select category' search selection options={category} />
+        <Dropdown
+          fluid={false}
+          placeholder='Select category'
+          search
+          selection
+          onChange={(e, data) => {
+            console.log(data);
+            setPredicate('category', data.value!.toString());
+          }}
+          options={categoryOptionsRegistry}
+        />
       </Table.Cell>
       <Table.Cell>
-        <Dropdown fluid={false} placeholder='Select brand' search selection options={category} />
+        <Dropdown
+          fluid={false}
+          placeholder='Select brand'
+          search
+          selection
+          onChange={(e, data) => {
+            console.log(data);
+            setPredicate('brand', data.value!.toString());
+          }}
+          options={brandOptionsRegistry}
+        />
       </Table.Cell>
       <Table.Cell>
         <div className='ui input'>
@@ -47,7 +71,6 @@ const ProductSearch: React.FC<IProps> = () => {
         <Button.Group>
           <Button color='green' onClick={() => setPredicate('final', 'true')}>
             <Icon name='search' />
-            Search
           </Button>
           <Button
             color='grey'
@@ -56,7 +79,6 @@ const ProductSearch: React.FC<IProps> = () => {
             }}
           >
             <Icon name='redo' />
-            Reset
           </Button>
         </Button.Group>
       </Table.Cell>

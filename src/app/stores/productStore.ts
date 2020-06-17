@@ -5,12 +5,8 @@ import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
-import { category } from '../common/sample/categoryOptions';
 
 const LIMIT = 5;
-//export var categoryOptions: category[];
-//var categoryOptions: String[];
-//var brandOptions: String[];
 
 export default class ProductStore {
   _rootStore: RootStore;
@@ -85,12 +81,12 @@ export default class ProductStore {
     this.loadingInitial = true;
 
     try {
-      const productEnvelope = await await agent.Product.list(this.axiosParams);
+      const productEnvelope = await agent.Product.list(this.axiosParams);
       const { products, resultCount } = productEnvelope;
       runInAction('loading products', () => {
         this.productRegistry.clear();
         this.productCount = resultCount;
-        products.map((product) => {
+        products.forEach((product) => {
           this.productRegistry.set(product.id, product);
         });
       });

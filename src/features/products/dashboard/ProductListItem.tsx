@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Label, Table } from 'semantic-ui-react';
+import { Button, Label, Table, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { IProduct } from '../../../app/models/product';
 import { RootStoreContext } from '../../../app/stores/rootStore';
@@ -78,27 +78,28 @@ const ProductListItem: React.FC<{ product: IProduct; index: number }> = ({ produ
       <Table.Cell>{product.stock}</Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
-          <Button
-            // onClick={() => selectActivity(activity.id)}
+          <Button // onClick={() => selectActivity(activity.id)}
             as={Link}
             to={`/products/${product.id}`}
-            content='View'
             color='blue'
-          />
-          <Button
-            // onClick={() => selectActivity(activity.id)}
+          >
+            <Icon name='search plus' />
+          </Button>
+          <Button // onClick={() => selectActivity(activity.id)}
             as={Link}
             to={`/products/${product.id}/manage`}
             color='orange'
-            content='Edit'
-          />
+          >
+            <Icon name='edit' />{' '}
+          </Button>
           <Button
             name={product.id}
             loading={targetDelete === product.id.toString() && submitting}
             onClick={(e) => deleteProduct(e, product.id)}
-            content='Delete'
             color='red'
-          />
+          >
+            <Icon name='trash alternate' />
+          </Button>
         </Button.Group>
       </Table.Cell>
     </Table.Row>

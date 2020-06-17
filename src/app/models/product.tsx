@@ -19,7 +19,6 @@ export class ProductFormValues implements IProductFormValues {
   id?: string = undefined;
   name: string = '';
   category: string = '';
-  description: string = '';
   brand: string = '';
   price: number = 0;
   importPrice: number = 0;
