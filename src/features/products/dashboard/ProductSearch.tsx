@@ -36,7 +36,6 @@ const ProductSearch: React.FC<IProps> = () => {
           search
           selection
           onChange={(e, data) => {
-            console.log(data);
             setPredicate('category', data.value!.toString());
           }}
           options={categoryOptionsRegistry}
@@ -49,7 +48,6 @@ const ProductSearch: React.FC<IProps> = () => {
           search
           selection
           onChange={(e, data) => {
-            console.log(data);
             setPredicate('brand', data.value!.toString());
           }}
           options={brandOptionsRegistry}
