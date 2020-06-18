@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { history } from '../..';
 import { toast } from 'react-toastify';
-import { IProduct, IProductEnvelope } from '../models/product';
+import { IProduct, IProductEnvelope, IPhoto } from '../models/product';
 import { IProductOption } from '../common/sample/productOptions';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
@@ -74,6 +74,13 @@ const Product = {
   delete: (id: string) => requests.delete(`/products/${id}`),
 };
 
+const Photo = {
+  uploadPhoto: (photo: Blob, productId: string): Promise<IPhoto> =>
+    requests.postForm(`/photo/${productId}`, photo),
+  setMainPhoto: (id: string) => requests.post(`/photo/${id}`, {}),
+  deletePhoto: (id: string) => requests.delete(`/photo/${id}`),
+};
+
 const ProductOptions = {
   list: (): Promise<IProductOption> => requests.get('/productOptions'),
 };
@@ -81,4 +88,5 @@ const ProductOptions = {
 export default {
   Product,
   ProductOptions,
+  Photo,
 };

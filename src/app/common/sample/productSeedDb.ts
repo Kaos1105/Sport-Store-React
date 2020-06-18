@@ -10,6 +10,8 @@ export const product: IProduct[] = [
     importPrice: 1,
     stock: 99,
     dateAdded: new Date('2012-10-20'),
+    photos: [],
+    image: '',
   },
   {
     id: '002',
@@ -20,6 +22,8 @@ export const product: IProduct[] = [
     importPrice: 1.2,
     stock: 90,
     dateAdded: new Date('2012-11-20'),
+    photos: [],
+    image: '',
   },
   {
     id: '003',
@@ -30,6 +34,8 @@ export const product: IProduct[] = [
     importPrice: 1,
     stock: 99,
     dateAdded: new Date('2012-10-21'),
+    photos: [],
+    image: '',
   },
   {
     id: '004',
@@ -40,5 +46,7 @@ export const product: IProduct[] = [
     importPrice: 1,
     stock: 90,
     dateAdded: new Date('2012-11-20'),
+    photos: [],
+    image: '',
   },
 ];

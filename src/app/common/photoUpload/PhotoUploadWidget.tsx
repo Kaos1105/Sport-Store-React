@@ -5,11 +5,12 @@ import PhotoWidgetDropzone from './PhotoWidgetDropzone';
 import PhotoWidgetCropper from './PhotoWidgetCropper';
 
 interface IProps {
+  productId: string;
   loading: boolean;
-  uploadPhoto: (file: Blob) => void;
+  uploadPhoto: (file: Blob, productId: string) => void;
 }
 
-const PhotoUploadWidget: React.FC<IProps> = ({ loading, uploadPhoto }) => {
+const PhotoUploadWidget: React.FC<IProps> = ({ productId, loading, uploadPhoto }) => {
   const [files, setFiles] = useState<any[]>([]);
   const [image, setImage] = useState<Blob | null>(null);
 
@@ -44,7 +45,7 @@ const PhotoUploadWidget: React.FC<IProps> = ({ loading, uploadPhoto }) => {
                   positive
                   icon='check'
                   loading={loading}
-                  onClick={() => uploadPhoto(image!)}
+                  onClick={() => uploadPhoto(image!, productId)}
                 />
                 <Button icon='close' disabled={loading} onClick={() => setFiles([])} />
               </Button.Group>

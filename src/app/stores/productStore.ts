@@ -1,6 +1,6 @@
 import { observable, action, runInAction, computed, reaction } from 'mobx';
 import { SyntheticEvent } from 'react';
-import { IProduct } from '../models/product';
+import { IProduct, IPhoto } from '../models/product';
 import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
@@ -50,6 +50,11 @@ export default class ProductStore {
   @observable productCount = 0;
   @observable page = 1;
 
+  //Photo
+  @observable loadingProfile = true;
+  @observable uploadingPhoto = false;
+  @observable setMainLoading = false;
+
   @computed get totalPages() {
     return Math.ceil(this.productCount / LIMIT);
   }
@@ -91,6 +96,7 @@ export default class ProductStore {
         });
       });
     } catch (error) {
+      toast.error('Problem load product');
       console.log(error);
     } finally {
       runInAction('finished loading', () => {
@@ -115,6 +121,7 @@ export default class ProductStore {
         });
         return product;
       } catch (error) {
+        toast.error('Problem load products');
         console.log(error);
       } finally {
         runInAction('finish getting detail product', () => {
@@ -158,6 +165,7 @@ export default class ProductStore {
       });
       history.push(`/products/${product.id}`);
     } catch (error) {
+      toast.error('Problem editing data');
       console.log(error);
     } finally {
       runInAction('finished editing', () => {
@@ -178,11 +186,74 @@ export default class ProductStore {
         this.productRegistry.delete(id);
       });
     } catch (error) {
+      toast.error('Problem deleting data');
       console.log(error);
     } finally {
       runInAction('finished deleting', () => {
         this.submitting = false;
         this.targetDelete = '';
+      });
+    }
+  };
+
+  //--Photo Part--
+
+  @action uploadPhoto = async (file: Blob, productId: string) => {
+    this.uploadingPhoto = true;
+    try {
+      const photo = await agent.Photo.uploadPhoto(file, productId);
+      runInAction(() => {
+        if (this.selectedProduct) {
+          this.selectedProduct.photos.push(photo);
+          if (photo.main) {
+            this.selectedProduct.image = photo.url;
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error('Problem uploading photo');
+    } finally {
+      runInAction(() => {
+        this.uploadingPhoto = false;
+      });
+    }
+  };
+
+  @action setMainPhoto = async (photo: IPhoto) => {
+    this.setMainLoading = true;
+    try {
+      await agent.Photo.setMainPhoto(photo.id);
+      runInAction(() => {
+        this.selectedProduct!.image = photo.url;
+        this.selectedProduct!.photos.find((a) => a.main)!.main = false;
+        this.selectedProduct!.photos.find((a) => (a.id = photo.id))!.main = true;
+        this.selectedProduct!.image = photo.url;
+      });
+    } catch (error) {
+      toast.error('Problem setting photo as main');
+    } finally {
+      runInAction(() => {
+        this.setMainLoading = false;
+      });
+    }
+    //final testing
+  };
+
+  @action deletePhoto = async (photo: IPhoto) => {
+    this.setMainLoading = true;
+    try {
+      await agent.Photo.deletePhoto(photo.id);
+      runInAction(() => {
+        this.selectedProduct!.photos = this.selectedProduct!.photos.filter(
+          (a) => a.id !== photo.id
+        );
+      });
+    } catch (error) {
+      toast.error('Problem deleting the photo');
+    } finally {
+      runInAction(() => {
+        this.setMainLoading = false;
       });
     }
   };

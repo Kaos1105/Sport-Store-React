@@ -3,6 +3,7 @@ import { Segment, Grid, Icon, Label, Button } from 'semantic-ui-react';
 import { IProduct } from '../../../app/models/product';
 import { format, zonedTimeToUtc } from 'date-fns-tz';
 import { Link } from 'react-router-dom';
+import ProductPhoto from './ProductPhoto';
 
 const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
   const timeZone = 'Asia/Bangkok';
@@ -68,6 +69,9 @@ const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
             <span>Price: {product.price}</span>
           </Grid.Column>
         </Grid>
+      </Segment>
+      <Segment>
+        <ProductPhoto />
       </Segment>
     </Segment.Group>
   );
