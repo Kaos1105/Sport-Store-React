@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placeholder, Segment } from 'semantic-ui-react';
+import { Placeholder, Segment, Grid } from 'semantic-ui-react';
 
 const ProductDetailInfoPlaceholder = () => (
   <Segment.Group>
@@ -46,9 +46,24 @@ const ProductDetailInfoPlaceholder = () => (
       </Placeholder>
     </Segment>
     <Segment>
-      <Placeholder style={{ height: 150, width: 150 }}>
-        <Placeholder.Image />
-      </Placeholder>
+      <Grid>
+        {' '}
+        <Grid.Column width={3}>
+          <Placeholder style={{ height: 150, width: 150 }}>
+            <Placeholder.Image />
+          </Placeholder>
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <Placeholder style={{ height: 150, width: 150 }}>
+            <Placeholder.Image />
+          </Placeholder>
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <Placeholder style={{ height: 150, width: 150 }}>
+            <Placeholder.Image />
+          </Placeholder>
+        </Grid.Column>
+      </Grid>
     </Segment>
   </Segment.Group>
 );
