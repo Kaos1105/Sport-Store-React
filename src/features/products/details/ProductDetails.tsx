@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import ProductDetailInfo from './ProductDetailInfo';
+import ProductDetailInfoPlaceholder from './ProductDetailInfoPlaceholder';
 
 interface DetailParams {
   id: string;
@@ -12,18 +13,19 @@ interface DetailParams {
 
 const ProductDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
   const rootStore = useContext(RootStoreContext);
-  const { selectedProduct: activity, loadProduct, loadingInitial } = rootStore.productStore;
+  const { selectedProduct: product, loadProduct, loadingInitial } = rootStore.productStore;
   useEffect(() => {
     loadProduct(match.params.id);
-  }, [loadProduct, match.params.id, history]);
+  }, [loadProduct, match.params.id, history, product?.image]);
 
-  if (loadingInitial) return <LoadingComponent content='Loading activity...' />;
-  if (!activity) return <h2>Activity not found</h2>;
+  //if (loadingInitial) return <LoadingComponent content='Loading product...' />;
+  if (loadingInitial) return <ProductDetailInfoPlaceholder />;
+  if (!product) return <h2>Product not found</h2>;
 
   return (
     <Grid>
       <GridColumn width={10}>
-        <ProductDetailInfo product={activity} />
+        <ProductDetailInfo product={product} />
       </GridColumn>
     </Grid>
   );

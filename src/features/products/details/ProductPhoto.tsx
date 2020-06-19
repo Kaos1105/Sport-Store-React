@@ -43,7 +43,6 @@ const ProductPhoto = () => {
           />
         ) : (
           <Card.Group itemsPerRow='3'>
-            {console.log(selectedProduct?.photos)}
             {selectedProduct &&
               selectedProduct.photos.map((photo) => (
                 <Card key={photo.id}>
