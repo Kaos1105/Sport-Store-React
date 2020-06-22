@@ -12,6 +12,7 @@ import ProductDashboard from '../../features/products/dashboard/ProductDashboard
 import ProductDetails from '../../features/products/details/ProductDetails';
 import ProductForm from '../../features/products/form/ProductForm';
 import HomePage from '../../features/home/HomePage';
+import ModalContainer from '../common/modals/ModalContainer';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -22,7 +23,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
 
   return (
     <Fragment>
-      {/* <ModalContainer /> */}
+      <ModalContainer />
       <Route exact path='/' component={HomePage} />
       <Route
         path={'/(.+)'}

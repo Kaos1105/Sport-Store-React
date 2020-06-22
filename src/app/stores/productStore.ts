@@ -178,8 +178,8 @@ export default class ProductStore {
   @action deleteProduct = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     this.submitting = true;
     this.targetDelete = event.currentTarget.name;
-    console.log(this.targetDelete);
-    console.log(this.submitting);
+    //console.log(this.targetDelete);
+    //console.log(this.submitting);
     try {
       await agent.Product.delete(id);
       runInAction('deleting product', () => {

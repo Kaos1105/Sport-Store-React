@@ -3,6 +3,7 @@ import { history } from '../..';
 import { toast } from 'react-toastify';
 import { IProduct, IProductEnvelope, IPhoto } from '../models/product';
 import { IProductOption } from '../common/sample/productOptions';
+import { IUser, IUserFormValues } from '../models/user';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
 
@@ -85,8 +86,16 @@ const ProductOptions = {
   list: (): Promise<IProductOption> => requests.get('/productOptions'),
 };
 
+const Users = {
+  login: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/login`, user),
+  register: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/register`, user),
+  delete: (email: String) => requests.delete(`/users/${email}`),
+  getEmployee: (): Promise<IUser[]> => requests.get('/users'),
+};
+
 export default {
   Product,
   ProductOptions,
   Photo,
+  Users,
 };
