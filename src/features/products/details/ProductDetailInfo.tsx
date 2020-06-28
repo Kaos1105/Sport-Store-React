@@ -45,7 +45,7 @@ const ProductDetailInfo: React.FC<{ product: IProduct }> = ({ product }) => {
           <Grid.Column width={15}>
             {' '}
             <Icon name='calendar' size='large' color='teal' />
-            Date added: {format(utcDate, 'MM/dd/yyyy', { timeZone: 'Asia/Bangkok' })}
+            Date added: {format(utcDate, 'dd/MM/yyyy', { timeZone: timeZone })}
           </Grid.Column>
         </Grid>
       </Segment>

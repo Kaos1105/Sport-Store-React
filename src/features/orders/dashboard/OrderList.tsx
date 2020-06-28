@@ -1,14 +1,14 @@
 import React, { useContext, Fragment } from 'react';
 import { Item, Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
-import ProductListItem from './ProductListItem';
+import OrderListItem from './OrderListItem';
 import { RootStoreContext } from '../../../app/stores/rootStore';
-import ProductSearch from './ProductSearch';
+import OrderSearch from './OrderSearch';
 
-const ProductList: React.FC = () => {
+const OrderList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { productRegistry } = rootStore.productStore;
-  const lstProduct = Array.from(productRegistry.values());
+  const { orderRegistry } = rootStore.orderStore;
+  const lstOrders = Array.from(orderRegistry.values());
   return (
     <Fragment>
       <Item.Group divided>
@@ -16,18 +16,18 @@ const ProductList: React.FC = () => {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Index</Table.HeaderCell>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell>Brand</Table.HeaderCell>
-              <Table.HeaderCell>Stock</Table.HeaderCell>
+              <Table.HeaderCell>Recipient Name</Table.HeaderCell>
+              <Table.HeaderCell>Recipient Address</Table.HeaderCell>
+              <Table.HeaderCell>Recipient Phone</Table.HeaderCell>
+              <Table.HeaderCell>Placement Date</Table.HeaderCell>
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
-            <ProductSearch />
-            {lstProduct.map((product, index) => (
-              <ProductListItem key={product.id} product={product} index={index + 1} />
+            <OrderSearch />
+            {lstOrders.map((order, index) => (
+              <OrderListItem key={order.id} order={order} index={index + 1} />
             ))}
           </Table.Body>
         </Table>
@@ -36,4 +36,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default observer(ProductList);
+export default observer(OrderList);

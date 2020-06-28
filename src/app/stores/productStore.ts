@@ -121,7 +121,7 @@ export default class ProductStore {
         });
         return product;
       } catch (error) {
-        toast.error('Problem load products');
+        toast.error('Problem load product');
         console.log(error);
       } finally {
         runInAction('finish getting detail product', () => {

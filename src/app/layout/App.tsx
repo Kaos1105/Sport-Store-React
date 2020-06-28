@@ -13,6 +13,8 @@ import ProductDetails from '../../features/products/details/ProductDetails';
 import ProductForm from '../../features/products/form/ProductForm';
 import HomePage from '../../features/home/HomePage';
 import ModalContainer from '../common/modals/ModalContainer';
+import OrderDashboard from '../../features/orders/dashboard/OrderDashboard';
+import OrderDetails from '../../features/orders/details/OrderDetails';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -38,6 +40,13 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <Route
                   key={location.key}
                   path={['/productsCreate', '/products/:id/manage']}
+                  component={ProductForm}
+                />
+                <Route exact path='/orders' component={OrderDashboard} />
+                <Route exact path='/orders/:id' component={OrderDetails} />
+                <Route
+                  key={location.key}
+                  path={['/ordersCreate', '/orders/:id/manage']}
                   component={ProductForm}
                 />
                 <Route component={NotFound} />

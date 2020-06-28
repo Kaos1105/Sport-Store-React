@@ -68,7 +68,7 @@ export default class UserStore {
       runInAction('loading Users', () => {
         this.usersRegistry.clear();
         employees.forEach((user) => {
-          this.usersRegistry.set(user.id, user);
+          this.usersRegistry.set(user.email, user);
         });
       });
     } catch (error) {
@@ -98,6 +98,18 @@ export default class UserStore {
         this.submitting = false;
         this.targetDelete = '';
       });
+    }
+  };
+
+  //Edit
+  @action updateUser = async (user: IUserFormValues) => {
+    try {
+      await agent.Users.edit(user);
+      runInAction(() => {
+        this.usersRegistry.set(user.email, user);
+      });
+    } catch (error) {
+      toast.error('Problem updating User');
     }
   };
 

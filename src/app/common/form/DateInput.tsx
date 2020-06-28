@@ -18,6 +18,7 @@ const DateInput: React.FC<IProps> = ({
   return (
     <Form.Field error={touched && !!error} width={width}>
       <DateTimePicker
+        format='dd/MM/yyyy'
         placeholder={placeholder}
         value={input.value || null}
         onChange={input.onChange}

@@ -2,6 +2,7 @@ import { observable, action, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { RootStore } from './rootStore';
 import { ICategoryOptions, IBrandOptions } from '../common/sample/productOptions';
+import { toast } from 'react-toastify';
 
 export default class ProductOptions {
   _rootStore: RootStore;
@@ -36,6 +37,7 @@ export default class ProductOptions {
       });
     } catch (error) {
       console.log(error);
+      toast.error('Problem loading product options');
     } finally {
       runInAction('finished loading', () => {
         this.loadingOptions = false;

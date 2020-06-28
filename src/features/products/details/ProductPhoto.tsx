@@ -44,8 +44,8 @@ const ProductPhoto = () => {
         ) : (
           <Card.Group itemsPerRow='3'>
             {selectedProduct &&
-              selectedProduct.photos.map((photo) => (
-                <Card key={photo.id}>
+              selectedProduct.photos.map((photo, index) => (
+                <Card key={index}>
                   <Image src={photo.url} />
                   <Button.Group widths={2}>
                     <Button
