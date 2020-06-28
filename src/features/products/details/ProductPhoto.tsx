@@ -42,7 +42,7 @@ const ProductPhoto = () => {
             loading={uploadingPhoto}
           />
         ) : (
-          <Card.Group itemsPerRow='3'>
+          <Card.Group itemsPerRow='3' stackable={true}>
             {selectedProduct &&
               selectedProduct.photos.map((photo, index) => (
                 <Card key={index}>

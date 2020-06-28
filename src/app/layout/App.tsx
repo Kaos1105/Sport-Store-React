@@ -47,7 +47,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <Route exact path='/orders/:id' component={OrderDetails} />
                 <Route
                   key={location.key}
-                  path={['/ordersCreate', '/orders/:id/manage']}
+                  path={['/orderCreate', '/orders/:id/manage']}
                   component={OrderForm}
                 />
                 <Route component={NotFound} />

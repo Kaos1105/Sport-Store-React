@@ -4,7 +4,8 @@ import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
-import { IOrder } from '../models/order';
+import { IOrder, IProductOrder } from '../models/order';
+import { IProduct } from '../models/product';
 
 const LIMIT = 5;
 
@@ -40,11 +41,48 @@ export default class OrderStore {
   //Details
   @observable selectedOrder: IOrder | null = null;
 
+  //Dropdown options
+  @observable selectedProduct: IProduct | null = null;
+  @observable quantity: number = 0;
+
+  //Set product
+  @action setSelectedProduct = async (product: IProduct) => {
+    try {
+      runInAction('setting product', () => {
+        this.selectedProduct = product;
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error('Problem setting product options');
+    } finally {
+      runInAction('finished loading', () => {});
+    }
+  };
+  //Set quantity
+  @action setQuantity = async (input: number) => {
+    try {
+      runInAction('setting quantity', () => {
+        this.quantity = input;
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error('Quantity is not valid');
+    } finally {
+      runInAction('finished loading', () => {});
+    }
+  };
+
   //Create
   @observable submitting = false;
 
+  //Edit productOrder
+  @observable editable = false;
+
   //Delete
   @observable targetDelete = '';
+
+  //Add
+  @observable adding = false;
 
   //Paging
   @observable orderCount = 0;
@@ -111,6 +149,7 @@ export default class OrderStore {
       try {
         order = await agent.Orders.details(id);
         runInAction('getting detail order', () => {
+          if (order.products.length == 0) this.editable = true;
           this.selectedOrder = order;
           this.orderRegistry.set(order.id, order);
         });
@@ -167,6 +206,50 @@ export default class OrderStore {
         this.submitting = false;
       });
     }
+  };
+
+  //Add OrderProduct
+  @action addProductOrder = async () => {
+    this.adding = true;
+    if (this.quantity > this.selectedProduct?.stock!)
+      toast.error('Quantity is bigger than product stock:' + this.selectedProduct?.stock!);
+    else if (this.quantity === 0) toast.error('Quantity is not valid');
+    else if (this.selectedProduct === null) toast.error('Must select a product before adding');
+    else {
+      try {
+        runInAction('adding product order', () => {
+          let productOrder: IProductOrder = {
+            product: this.selectedProduct!,
+            quantity: this.quantity,
+          };
+          if (this.selectedOrder!.products.length == 0)
+            this.selectedOrder?.products.push(productOrder);
+          else {
+            for (let iterator of this.selectedOrder!.products) {
+              if (iterator.product.id === productOrder.product.id) {
+                iterator.quantity += productOrder.quantity;
+                if (iterator.quantity <= 0)
+                  this.selectedOrder!.products.filter(
+                    (a) => a.product.id !== productOrder.product.id
+                  );
+                break;
+              } else {
+                this.selectedOrder?.products.push(productOrder);
+                break;
+              }
+            }
+          }
+        });
+      } catch (error) {
+        toast.error('Problem adding data');
+        console.log(error);
+      } finally {
+        runInAction('finished adding', () => {
+          this.adding = false;
+        });
+      }
+    }
+    console.log(this.selectedOrder);
   };
 
   //Delete

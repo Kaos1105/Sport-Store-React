@@ -28,7 +28,7 @@ const OrderDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
         <OrderDetailInfo order={order} />
       </GridColumn>
       <GridColumn width={10}>
-        <OrderProduct order={order} />
+        <OrderProduct />
       </GridColumn>
     </Grid>
   );

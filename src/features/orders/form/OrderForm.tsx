@@ -76,7 +76,7 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
                   value={order.recipientName}
                   component={TextInput}
                 />
-                <Label>Category</Label>
+                <Label>Address</Label>
                 <Field
                   name='recipientAddress'
                   placeholder='Address'
