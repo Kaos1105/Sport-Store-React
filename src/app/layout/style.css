@@ -52,4 +52,8 @@ code {
 .ui.pagination.menu {
   margin-bottom: 1em;
 }
+
+.imageOrderCell {
+  height: 5em;
+}
 /*end home page styles*/

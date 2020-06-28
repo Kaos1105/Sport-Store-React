@@ -17,9 +17,12 @@ const NavBar: React.FC = () => {
           SportsStore
         </Menu.Item>
         <Menu.Item name='Products' as={NavLink} to='/products' />
-        <Menu.Item name='Orders' as={NavLink} to='/orders' />
         <Menu.Item>
           <Button as={NavLink} to='/productsCreate' positive content='Create Product' />
+        </Menu.Item>
+        <Menu.Item name='Orders' as={NavLink} to='/orders' />
+        <Menu.Item>
+          <Button as={NavLink} to='/orderCreate' positive content='Create Order' />
         </Menu.Item>
         {user && (
           <Menu.Item position='right'>

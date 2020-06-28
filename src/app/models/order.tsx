@@ -18,3 +18,22 @@ export interface IOrderEnvelope {
   orders: IOrder[];
   resultCount: number;
 }
+
+export interface IOrderFormValues extends Partial<IOrder> {}
+
+export class OrderFormValues implements IOrderFormValues {
+  id?: string = undefined;
+  recipientName: string = '';
+  recipientAddress: string = '';
+  recipientPhone: string = '';
+  placementDate?: Date = undefined;
+
+  constructor(init?: IOrderFormValues) {
+    if (init && init.placementDate) {
+      // Do NOT FUCKING CHANGE OBJECT OUTSIDE MOBX
+      //init.time=init.date
+      this.placementDate = init.placementDate;
+    }
+    Object.assign(this, init);
+  }
+}

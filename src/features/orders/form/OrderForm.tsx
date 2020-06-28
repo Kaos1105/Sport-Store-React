@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Segment, Form, Button, Grid, Label } from 'semantic-ui-react';
-import { ProductFormValues } from '../../../app/models/product';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
 import { Form as FinalForm, Field } from 'react-final-form';
@@ -10,15 +9,13 @@ import DateInput from '../../../app/common/form/DateInput';
 import { combineValidators, isRequired, composeValidators, isNumeric } from 'revalidate';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
+import { OrderFormValues } from '../../../app/models/order';
 
 const validate = combineValidators({
-  name: isRequired('Name'),
-  category: isRequired('Category'),
-  brand: isRequired('Brand'),
-  price: composeValidators(isRequired('Price'), isNumeric('Price'))(),
-  importPrice: composeValidators(isRequired('ImportPrice'), isNumeric('ImportPrice'))(),
-  stock: composeValidators(isRequired('Stock'), isNumeric('Stock'))(),
-  dateAdded: isRequired('Date'),
+  recipientName: isRequired('Name'),
+  recipientAddress: isRequired('Address'),
+  recipientPhone: composeValidators(isRequired('Phone'), isNumeric('Phone'))(),
+  placementDate: isRequired('Date'),
 });
 
 interface DetailParams {
@@ -28,36 +25,36 @@ interface DetailParams {
 const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
   const timeZone = 'Asia/Bangkok';
   const rootStore = useContext(RootStoreContext);
-  const { createProduct, editProduct, submitting, loadProduct } = rootStore.productStore;
+  const { createOrder, editOrder, submitting, loadOrder } = rootStore.orderStore;
 
-  const [product, setProduct] = useState(new ProductFormValues());
+  const [order, setOrder] = useState(new OrderFormValues());
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
-      loadProduct(match.params.id)
-        .then((product) => {
-          let utcDate = zonedTimeToUtc(product.dateAdded, timeZone);
+      loadOrder(match.params.id)
+        .then((order) => {
+          let utcDate = zonedTimeToUtc(order.placementDate, timeZone);
           let dateAdded = utcToZonedTime(utcDate, timeZone);
-          let result = new ProductFormValues(product);
-          result.dateAdded = dateAdded;
-          setProduct(new ProductFormValues(result));
+          let result = new OrderFormValues(order);
+          result.placementDate = dateAdded;
+          setOrder(new OrderFormValues(result));
         })
         .finally(() => setLoading(false));
     }
-  }, [loadProduct, match.params.id]);
+  }, [loadOrder, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
-    const { ...product } = values;
-    if (!product.id) {
-      let newProduct = {
-        ...product,
+    const { ...order } = values;
+    if (!order.id) {
+      let newOrder = {
+        ...order,
         id: '',
       };
-      createProduct(newProduct);
+      createOrder(newOrder);
     } else {
-      editProduct(product);
+      editOrder(order);
     }
     //console.log(activity);
   };
@@ -68,56 +65,40 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
         <Segment clearing>
           <FinalForm
             validate={validate}
-            initialValues={product}
+            initialValues={order}
             onSubmit={handleFinalFormSubmit}
             render={({ handleSubmit, invalid, pristine }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
                 <Label>Name</Label>
-                <Field name='name' placeholder='Name' value={product.name} component={TextInput} />
+                <Field
+                  name='recipientName'
+                  placeholder='Name'
+                  value={order.recipientName}
+                  component={TextInput}
+                />
                 <Label>Category</Label>
                 <Field
-                  name='category'
-                  placeholder='Category'
-                  value={product.category}
+                  name='recipientAddress'
+                  placeholder='Address'
+                  value={order.recipientAddress}
                   component={TextInput}
                 />
-                <Label>Brand</Label>
-                <Field
-                  name='brand'
-                  placeholder='Brand'
-                  value={product.brand}
-                  component={TextInput}
-                />
-                <Label>Date Aded</Label>
+                <Label>Placement Date</Label>
                 <Form.Group widths='equal'>
                   <Field
-                    name='dateAdded'
+                    name='placementDate'
                     date={true}
-                    placeholder='Date Added'
-                    value={product.dateAdded}
+                    placeholder='Date'
+                    value={order.placementDate}
                     //{...console.log(activity.date)}
                     component={DateInput}
                   />
                 </Form.Group>
-                <Label>Stock</Label>
+                <Label>Phone</Label>
                 <Field
-                  name='stock'
-                  placeholder='Stock'
-                  value={product.stock}
-                  component={NumberInput}
-                />
-                <Label>Price</Label>
-                <Field
-                  name='price'
-                  placeholder='Price'
-                  value={product.price}
-                  component={NumberInput}
-                />
-                <Label>Import Price</Label>
-                <Field
-                  name='importPrice'
-                  placeholder='Import Price'
-                  value={product.importPrice}
+                  name='recipientPhone'
+                  placeholder='Phone'
+                  value={parseInt(order.recipientPhone)}
                   component={NumberInput}
                 />
                 <Button
@@ -131,9 +112,9 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
                 <Button
                   disabled={loading}
                   onClick={
-                    product.id
-                      ? () => history.push(`/products/${product.id}`)
-                      : () => history.push('/products')
+                    order.id
+                      ? () => history.push(`/orders/${order.id}`)
+                      : () => history.push('/orders')
                   }
                   floated='right'
                   type='button'

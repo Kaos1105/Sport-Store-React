@@ -150,7 +150,7 @@ export default class OrderStore {
   };
 
   //Edit
-  @action editProduct = async (order: IOrder) => {
+  @action editOrder = async (order: IOrder) => {
     this.submitting = true;
     try {
       await agent.Orders.update(order);

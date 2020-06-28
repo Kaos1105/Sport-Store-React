@@ -42,7 +42,7 @@ const OrderDetailInfo: React.FC<{ order: IOrder }> = ({ order }) => {
           <Grid.Column width={15}>
             {' '}
             <Icon name='calendar' size='large' color='teal' />
-            Date added: {format(utcDate, 'dd/MM/yyyy', { timeZone: timeZone })}
+            Placement Date: {format(utcDate, 'dd/MM/yyyy', { timeZone: timeZone })}
           </Grid.Column>
         </Grid>
       </Segment>

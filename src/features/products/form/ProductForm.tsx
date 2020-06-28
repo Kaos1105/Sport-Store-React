@@ -88,7 +88,7 @@ const ProductForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histo
                   value={product.brand}
                   component={TextInput}
                 />
-                <Label>Date Aded</Label>
+                <Label>Date Added</Label>
                 <Form.Group widths='equal'>
                   <Field
                     name='dateAdded'

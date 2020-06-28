@@ -4,7 +4,6 @@ import { RootStoreContext } from '../../../app/stores/rootStore';
 import { IOrder } from '../../../app/models/order';
 
 const OrderProduct: React.FC<{ order: IOrder }> = ({ order }) => {
-  const rootStore = useContext(RootStoreContext);
   var total: number = 0;
   return (
     <Table celled>
@@ -19,9 +18,9 @@ const OrderProduct: React.FC<{ order: IOrder }> = ({ order }) => {
 
       <Table.Body>
         {order!.products.map((productsOrder, index) => (
-          <Table.Row key={index}>
+          <Table.Row key={index} className='orderCell'>
             <Table.Cell>
-              <Image size='tiny' src={productsOrder.product.image || '/assets/user.png'} />
+              <Image size='small' src={productsOrder.product.image || '/assets/user.png'} />
               {productsOrder.product.name}
             </Table.Cell>
             <Table.Cell>{productsOrder.product.price}</Table.Cell>

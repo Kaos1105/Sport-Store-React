@@ -15,6 +15,7 @@ import HomePage from '../../features/home/HomePage';
 import ModalContainer from '../common/modals/ModalContainer';
 import OrderDashboard from '../../features/orders/dashboard/OrderDashboard';
 import OrderDetails from '../../features/orders/details/OrderDetails';
+import OrderForm from '../../features/orders/form/OrderForm';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -47,7 +48,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <Route
                   key={location.key}
                   path={['/ordersCreate', '/orders/:id/manage']}
-                  component={ProductForm}
+                  component={OrderForm}
                 />
                 <Route component={NotFound} />
               </Switch>
