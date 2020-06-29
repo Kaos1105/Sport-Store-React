@@ -81,9 +81,6 @@ export default class OrderStore {
   //Delete
   @observable targetDelete = '';
 
-  //Add
-  @observable adding = false;
-
   //Paging
   @observable orderCount = 0;
   @observable page = 1;
@@ -149,7 +146,6 @@ export default class OrderStore {
       try {
         order = await agent.Orders.details(id);
         runInAction('getting detail order', () => {
-          if (order.products.length == 0) this.editable = true;
           this.selectedOrder = order;
           this.orderRegistry.set(order.id, order);
         });
@@ -159,6 +155,8 @@ export default class OrderStore {
         console.log(error);
       } finally {
         runInAction('finish getting detail order', () => {
+          if (order.products.length == 0) this.editable = true;
+          else this.editable = false;
           this.loadingInitial = false;
         });
       }
@@ -208,50 +206,6 @@ export default class OrderStore {
     }
   };
 
-  //Add OrderProduct
-  @action addProductOrder = async () => {
-    this.adding = true;
-    if (this.quantity > this.selectedProduct?.stock!)
-      toast.error('Quantity is bigger than product stock:' + this.selectedProduct?.stock!);
-    else if (this.quantity === 0) toast.error('Quantity is not valid');
-    else if (this.selectedProduct === null) toast.error('Must select a product before adding');
-    else {
-      try {
-        runInAction('adding product order', () => {
-          let productOrder: IProductOrder = {
-            product: this.selectedProduct!,
-            quantity: this.quantity,
-          };
-          if (this.selectedOrder!.products.length == 0)
-            this.selectedOrder?.products.push(productOrder);
-          else {
-            for (let iterator of this.selectedOrder!.products) {
-              if (iterator.product.id === productOrder.product.id) {
-                iterator.quantity += productOrder.quantity;
-                if (iterator.quantity <= 0)
-                  this.selectedOrder!.products.filter(
-                    (a) => a.product.id !== productOrder.product.id
-                  );
-                break;
-              } else {
-                this.selectedOrder?.products.push(productOrder);
-                break;
-              }
-            }
-          }
-        });
-      } catch (error) {
-        toast.error('Problem adding data');
-        console.log(error);
-      } finally {
-        runInAction('finished adding', () => {
-          this.adding = false;
-        });
-      }
-    }
-    console.log(this.selectedOrder);
-  };
-
   //Delete
   @action deleteOrder = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     this.submitting = true;
@@ -271,6 +225,58 @@ export default class OrderStore {
         this.submitting = false;
         this.targetDelete = '';
       });
+    }
+  };
+
+  //Add OrderProduct
+  @action addProductOrder = async () => {
+    if (this.quantity > this.selectedProduct?.stock!)
+      toast.error('Quantity is bigger than product stock:' + this.selectedProduct?.stock!);
+    else if (this.quantity <= 0) toast.error('Quantity is not valid');
+    else if (this.selectedProduct === null) toast.error('Must select a product before adding');
+    else {
+      try {
+        runInAction('adding product order', () => {
+          let productOrder: IProductOrder = {
+            product: this.selectedProduct!,
+            quantity: this.quantity,
+          };
+          if (this.selectedOrder!.products.length == 0)
+            this.selectedOrder?.products.push(productOrder);
+          else {
+            for (let iterator of this.selectedOrder!.products) {
+              if (iterator.product.id === productOrder.product.id) {
+                iterator.quantity += productOrder.quantity;
+                break;
+              } else {
+                this.selectedOrder?.products.push(productOrder);
+                break;
+              }
+            }
+          }
+        });
+      } catch (error) {
+        toast.error('Problem adding data');
+        console.log(error);
+      } finally {
+        runInAction('finished adding', () => {});
+      }
+    }
+  };
+
+  //Remove OrderProduct
+  @action removeProductOrder = async () => {
+    try {
+      runInAction('Remove product order', () => {
+        this.selectedOrder!.products = this.selectedOrder!.products.filter(
+          (p) => p.product.id !== this.selectedProduct?.id
+        );
+      });
+    } catch (error) {
+      toast.error('Problem remove data');
+      console.log(error);
+    } finally {
+      runInAction('finished removing', () => {});
     }
   };
 }

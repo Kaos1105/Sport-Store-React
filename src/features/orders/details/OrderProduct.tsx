@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
+import createHistory from 'history/createBrowserHistory';
 
 const OrderProduct = () => {
   const rootStore = useContext(RootStoreContext);
@@ -13,9 +14,12 @@ const OrderProduct = () => {
     addProductOrder,
     setSelectedProduct,
     editable,
-    quantity,
     setQuantity,
+    removeProductOrder,
+    editOrder,
+    submitting,
   } = rootStore.orderStore;
+  const history = createHistory();
 
   useEffect(() => {
     loadOptions();
@@ -64,6 +68,7 @@ const OrderProduct = () => {
                       setQuantity(0);
                     } else setQuantity(parseInt(e.target.value));
                   }}
+                  min='1'
                 />
               </div>
             </Table.Cell>
@@ -73,11 +78,18 @@ const OrderProduct = () => {
                 <Button
                   color='green'
                   onClick={() => {
-                    console.log(quantity);
                     addProductOrder();
                   }}
                 >
                   <Icon name='plus' />
+                </Button>
+                <Button
+                  color='red'
+                  onClick={() => {
+                    removeProductOrder();
+                  }}
+                >
+                  <Icon name='trash' />
                 </Button>
               </Button.Group>
             </Table.Cell>
@@ -117,7 +129,15 @@ const OrderProduct = () => {
           </Table.HeaderCell>
           <Table.HeaderCell textAlign='center'>
             {editable ? (
-              <Button color='blue'>Submit</Button>
+              <Button
+                loading={submitting}
+                color='blue'
+                onClick={() => {
+                  editOrder(order!).then(() => history.go(0));
+                }}
+              >
+                Submit
+              </Button>
             ) : (
               <Button color='blue'>Export to file</Button>
             )}
