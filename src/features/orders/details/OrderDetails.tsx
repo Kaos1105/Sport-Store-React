@@ -20,7 +20,7 @@ const OrderDetails: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
 
   //if (loadingInitial) return <LoadingComponent content='Loading product...' />;
   if (loadingInitial) return <OrderDetailInfoPlaceholder />;
-  if (!order) return <h2>Product not found</h2>;
+  if (!order) return <h2>Order not found</h2>;
 
   return (
     <Grid>

@@ -17,13 +17,21 @@ const NavBar: React.FC = () => {
           SportsStore
         </Menu.Item>
         <Menu.Item name='Products' as={NavLink} to='/products' />
-        <Menu.Item>
+        {/* <Menu.Item>
           <Button as={NavLink} to='/productsCreate' positive content='Create Product' />
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item name='Orders' as={NavLink} to='/orders' />
+        <Menu.Item name='Imports' as={NavLink} to='/imports' />
         <Menu.Item>
-          <Button as={NavLink} to='/orderCreate' positive content='Create Order' />
+          <Dropdown pointing='top left' text='Create' labeled button className='button teal icon'>
+            <Dropdown.Menu>
+              <Dropdown.Item as={NavLink} to='/productsCreate' content='Create Product' />
+              <Dropdown.Item as={NavLink} to='/orderCreate' content='Create Order' />
+              <Dropdown.Item as={NavLink} to='/importCreate' content='Create Import' />
+            </Dropdown.Menu>
+          </Dropdown>
         </Menu.Item>
+
         {user && (
           <Menu.Item position='right'>
             <Image avatar spaced='right' src={'/assets/user.png'} />

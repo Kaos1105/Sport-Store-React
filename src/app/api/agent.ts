@@ -5,6 +5,7 @@ import { IProduct, IProductEnvelope, IPhoto } from '../models/product';
 import { IProductOption } from '../common/sample/productOptions';
 import { IUser, IUserFormValues } from '../models/user';
 import { IOrderEnvelope, IOrder } from '../models/order';
+import { IImportEnvelope, IImport } from '../models/import';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
 
@@ -54,10 +55,10 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
 // };
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(500)).then(responseBody),
-  post: (url: string, body: {}) => axios.post(url, body).then(sleep(500)).then(responseBody),
-  put: (url: string, body: {}) => axios.put(url, body).then(sleep(500)).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(sleep(500)).then(responseBody),
+  get: (url: string) => axios.get(url).then(sleep(400)).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(sleep(400)).then(responseBody),
+  put: (url: string, body: {}) => axios.put(url, body).then(sleep(400)).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(sleep(400)).then(responseBody),
   postForm: (url: string, file: Blob) => {
     let formData = new FormData();
     formData.append('File', file);
@@ -69,7 +70,7 @@ const requests = {
 
 const Product = {
   list: (params: URLSearchParams): Promise<IProductEnvelope> =>
-    axios.get('/products', { params: params }).then(sleep(500)).then(responseBody),
+    axios.get('/products', { params: params }).then(sleep(400)).then(responseBody),
   details: (id: string) => requests.get(`/products/${id}`),
   create: (product: IProduct) => requests.post('/products', product),
   update: (product: IProduct) => requests.put(`/products/${product.id}`, product),
@@ -97,11 +98,20 @@ const Users = {
 
 const Orders = {
   list: (params: URLSearchParams): Promise<IOrderEnvelope> =>
-    axios.get('/orders', { params: params }).then(sleep(500)).then(responseBody),
+    axios.get('/orders', { params: params }).then(sleep(400)).then(responseBody),
   details: (id: string) => requests.get(`/orders/${id}`),
   create: (order: IOrder) => requests.post('/orders', order),
   update: (order: IOrder) => requests.put(`/orders/${order.id}`, order),
   delete: (id: string) => requests.delete(`/orders/${id}`),
+};
+
+const Imports = {
+  list: (params: URLSearchParams): Promise<IImportEnvelope> =>
+    axios.get('/imports', { params: params }).then(sleep(400)).then(responseBody),
+  details: (id: string) => requests.get(`/imports/${id}`),
+  create: (importDTO: IImport) => requests.post('/imports', importDTO),
+  update: (importDTO: IImport) => requests.put(`/imports/${importDTO.id}`, importDTO),
+  delete: (id: string) => requests.delete(`/imports/${id}`),
 };
 
 export default {
@@ -110,4 +120,5 @@ export default {
   Photo,
   Users,
   Orders,
+  Imports,
 };

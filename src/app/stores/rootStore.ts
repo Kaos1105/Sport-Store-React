@@ -7,6 +7,7 @@ import ProductOptions from './productOptionsStore';
 import UserStore from './userStore';
 import OrderStore from './orderStore';
 import OrderOptionsStore from './orderProductOptionsStore';
+import ImportStore from './importStore';
 
 configure({ enforceActions: 'always' });
 
@@ -17,6 +18,7 @@ export class RootStore {
   modalStore: ModalStore;
   userStore: UserStore;
   orderStore: OrderStore;
+  importStore: ImportStore;
   orderOptions: OrderOptionsStore;
 
   constructor() {
@@ -27,6 +29,7 @@ export class RootStore {
     this.userStore = new UserStore(this);
     this.orderStore = new OrderStore(this);
     this.orderOptions = new OrderOptionsStore(this);
+    this.importStore = new ImportStore(this);
   }
 }
 

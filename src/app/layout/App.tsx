@@ -16,6 +16,9 @@ import ModalContainer from '../common/modals/ModalContainer';
 import OrderDashboard from '../../features/orders/dashboard/OrderDashboard';
 import OrderDetails from '../../features/orders/details/OrderDetails';
 import OrderForm from '../../features/orders/form/OrderForm';
+import ImportDashboard from '../../features/importss/dashboard/ImportDashboard';
+import ImportDetails from '../../features/importss/details/ImportDetails';
+import ImportForm from '../../features/importss/form/ImportForm';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -43,6 +46,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={['/productsCreate', '/products/:id/manage']}
                   component={ProductForm}
                 />
+
                 <Route exact path='/orders' component={OrderDashboard} />
                 <Route exact path='/orders/:id' component={OrderDetails} />
                 <Route
@@ -50,6 +54,15 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={['/orderCreate', '/orders/:id/manage']}
                   component={OrderForm}
                 />
+
+                <Route exact path='/imports' component={ImportDashboard} />
+                <Route exact path='/imports/:id' component={ImportDetails} />
+                <Route
+                  key={location.key}
+                  path={['/importCreate', '/imports/:id/manage']}
+                  component={ImportForm}
+                />
+
                 <Route component={NotFound} />
               </Switch>
             </Container>

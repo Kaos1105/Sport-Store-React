@@ -4,12 +4,12 @@ import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
-import { IOrder, IProductOrder } from '../models/order';
+import { IImport, IProductImport } from '../models/import';
 import { IProduct } from '../models/product';
 
 const LIMIT = 5;
 
-export default class OrderStore {
+export default class ImportStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
@@ -19,13 +19,13 @@ export default class OrderStore {
       () => {
         if (this.predicate.get('final') === 'true') {
           this.page = 1;
-          this.orderRegistry.clear();
-          this.loadOrders();
+          this.importRegistry.clear();
+          this.loadImports();
           this.predicate.clear();
         } else if (this.predicate.get('final') === 'false') {
           this.page = 1;
-          this.orderRegistry.clear();
-          this.loadOrders();
+          this.importRegistry.clear();
+          this.loadImports();
           this.predicate.clear();
         }
       }
@@ -33,13 +33,13 @@ export default class OrderStore {
   }
 
   //Observable map
-  @observable orderRegistry = new Map();
+  @observable importRegistry = new Map();
 
   //List
   @observable loadingInitial = false;
 
   //Details
-  @observable selectedOrder: IOrder | null = null;
+  @observable selectedImport: IImport | null = null;
 
   //Dropdown options
   @observable selectedProduct: IProduct | null = null;
@@ -75,18 +75,18 @@ export default class OrderStore {
   //Create
   @observable submitting = false;
 
-  //Edit productOrder
+  //Edit productImport
   @observable editable = false;
 
   //Delete
   @observable targetDelete = '';
 
   //Paging
-  @observable orderCount = 0;
+  @observable importCount = 0;
   @observable page = 1;
 
   @computed get totalPages() {
-    return Math.ceil(this.orderCount / LIMIT);
+    return Math.ceil(this.importCount / LIMIT);
   }
 
   @action setPages = (page: number) => {
@@ -112,21 +112,21 @@ export default class OrderStore {
   //Filtering option
 
   //List
-  @action loadOrders = async () => {
+  @action loadImports = async () => {
     this.loadingInitial = true;
 
     try {
-      const orderEnvelope = await agent.Orders.list(this.axiosParams);
-      const { orders, resultCount } = orderEnvelope;
-      runInAction('loading orders', () => {
-        this.orderRegistry.clear();
-        this.orderCount = resultCount;
-        orders.forEach((order) => {
-          this.orderRegistry.set(order.id, order);
+      const importEnvelope = await agent.Imports.list(this.axiosParams);
+      const { imports, resultCount } = importEnvelope;
+      runInAction('loading imports', () => {
+        this.importRegistry.clear();
+        this.importCount = resultCount;
+        imports.forEach((importDTO) => {
+          this.importRegistry.set(importDTO.id, importDTO);
         });
       });
     } catch (error) {
-      toast.error('Problem loading orders');
+      toast.error('Problem loading imports');
       console.log(error);
     } finally {
       runInAction('finished loading', () => {
@@ -136,26 +136,26 @@ export default class OrderStore {
   };
 
   //Detail
-  @action loadOrder = async (id: string) => {
-    let order = this.getOrder(id);
-    if (order) {
-      this.selectedOrder = order;
-      return order;
+  @action loadImport = async (id: string) => {
+    let importDTO = this.getImport(id);
+    if (importDTO) {
+      this.selectedImport = importDTO;
+      return importDTO;
     } else {
       this.loadingInitial = true;
       try {
-        order = await agent.Orders.details(id);
-        runInAction('getting detail order', () => {
-          this.selectedOrder = order;
-          this.orderRegistry.set(order.id, order);
+        importDTO = await agent.Imports.details(id);
+        runInAction('getting detail import', () => {
+          this.selectedImport = importDTO;
+          this.importRegistry.set(importDTO.id, importDTO);
         });
-        return order;
+        return importDTO;
       } catch (error) {
-        toast.error('Problem load order');
+        toast.error('Problem load import');
         console.log(error);
       } finally {
-        runInAction('finish getting detail order', () => {
-          if (order.products.length == 0) this.editable = true;
+        runInAction('finish getting detail import', () => {
+          if (importDTO.products.length == 0) this.editable = true;
           else this.editable = false;
           this.loadingInitial = false;
         });
@@ -163,19 +163,19 @@ export default class OrderStore {
     }
   };
 
-  getOrder = (id: string) => {
-    return this.orderRegistry.get(id);
+  getImport = (id: string) => {
+    return this.importRegistry.get(id);
   };
 
   //Create
-  @action createOrder = async (order: IOrder) => {
+  @action createImport = async (importDTO: IImport) => {
     this.submitting = true;
     try {
-      await agent.Orders.create(order);
-      runInAction('creating order', () => {
-        this.orderRegistry.set(order.id, order);
+      await agent.Imports.create(importDTO);
+      runInAction('creating import', () => {
+        this.importRegistry.set(importDTO.id, importDTO);
       });
-      history.push(`/orders/${order.id}`);
+      history.push(`/imports/${importDTO.id}`);
     } catch (error) {
       toast.error('Problem submitting data');
       console.log(error);
@@ -187,15 +187,15 @@ export default class OrderStore {
   };
 
   //Edit
-  @action editOrder = async (order: IOrder) => {
+  @action editImport = async (importDTO: IImport) => {
     this.submitting = true;
     try {
-      await agent.Orders.update(order);
-      runInAction('editing order', () => {
-        this.selectedOrder = order;
-        this.orderRegistry.set(order.id, order);
+      await agent.Imports.update(importDTO);
+      runInAction('editing import', () => {
+        this.selectedImport = importDTO;
+        this.importRegistry.set(importDTO.id, importDTO);
       });
-      history.push(`/orders/${order.id}`);
+      history.push(`/imports/${importDTO.id}`);
     } catch (error) {
       toast.error('Problem editing data');
       console.log(error);
@@ -207,15 +207,15 @@ export default class OrderStore {
   };
 
   //Delete
-  @action deleteOrder = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+  @action deleteImport = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     this.submitting = true;
     this.targetDelete = event.currentTarget.name;
     //console.log(this.targetDelete);
     //console.log(this.submitting);
     try {
-      await agent.Orders.delete(id);
-      runInAction('deleting order', () => {
-        this.orderRegistry.delete(id);
+      await agent.Imports.delete(id);
+      runInAction('deleting import', () => {
+        this.importRegistry.delete(id);
       });
     } catch (error) {
       toast.error('Problem deleting data');
@@ -228,28 +228,26 @@ export default class OrderStore {
     }
   };
 
-  //Add OrderProduct
-  @action addProductOrder = async () => {
-    if (this.quantity > this.selectedProduct?.stock!)
-      toast.error('Quantity is bigger than product stock:' + this.selectedProduct?.stock!);
-    else if (this.quantity <= 0) toast.error('Quantity is not valid');
+  //Add ImportProduct
+  @action addProductImport = async () => {
+    if (this.quantity <= 0) toast.error('Quantity is not valid');
     else if (this.selectedProduct === null) toast.error('Must select a product before adding');
     else {
       try {
-        runInAction('adding product order', () => {
-          let productOrder: IProductOrder = {
+        runInAction('adding product import', () => {
+          let productImport: IProductImport = {
             product: this.selectedProduct!,
             quantity: this.quantity,
           };
-          if (this.selectedOrder!.products.length == 0)
-            this.selectedOrder?.products.push(productOrder);
+          if (this.selectedImport!.products.length == 0)
+            this.selectedImport?.products.push(productImport);
           else {
-            for (let iterator of this.selectedOrder!.products) {
-              if (iterator.product.id === productOrder.product.id) {
-                iterator.quantity += productOrder.quantity;
+            for (let iterator of this.selectedImport!.products) {
+              if (iterator.product.id === productImport.product.id) {
+                iterator.quantity += productImport.quantity;
                 break;
               } else {
-                this.selectedOrder?.products.push(productOrder);
+                this.selectedImport?.products.push(productImport);
                 break;
               }
             }
@@ -264,11 +262,11 @@ export default class OrderStore {
     }
   };
 
-  //Remove OrderProduct
-  @action removeProductOrder = async () => {
+  //Remove ImportProduct
+  @action removeProductImport = async () => {
     try {
-      runInAction('Remove product order', () => {
-        this.selectedOrder!.products = this.selectedOrder!.products.filter(
+      runInAction('Remove product import', () => {
+        this.selectedImport!.products = this.selectedImport!.products.filter(
           (p) => p.product.id !== this.selectedProduct?.id
         );
       });
