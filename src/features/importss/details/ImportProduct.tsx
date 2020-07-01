@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 const ImportProduct = () => {
   const rootStore = useContext(RootStoreContext);
@@ -19,7 +19,7 @@ const ImportProduct = () => {
     editImport,
     submitting,
   } = rootStore.importStore;
-  const history = createHistory();
+  const history = createBrowserHistory();
 
   useEffect(() => {
     loadOptions();

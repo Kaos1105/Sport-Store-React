@@ -34,7 +34,7 @@ export default class UserStore {
       runInAction(() => {
         this.user = user;
       });
-      console.log(user);
+      this._rootStore.commonStore.setToken(user.token);
       this._rootStore.modalStore.closeModal();
       history.push('/products');
     } catch (error) {
@@ -46,10 +46,12 @@ export default class UserStore {
 
   @action register = async (values: IUserFormValues) => {
     try {
-      const user = await agent.Users.register(values);
-      runInAction(() => {
-        this.user = user;
-      });
+      //const user =
+      await agent.Users.register(values);
+      // runInAction(() => {
+      //   this.user = user;
+      // });
+      //this._rootStore.commonStore.setToken(user.token);
       this._rootStore.modalStore.closeModal();
       history.push('/products');
     } catch (error) {
@@ -60,6 +62,16 @@ export default class UserStore {
   };
 
   //Get User
+  @action getUser = async () => {
+    try {
+      const user = await agent.Users.current();
+      runInAction(() => (this.user = user));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //Get Users
   @action loadUsers = async () => {
     this.loadingInitial = true;
 
@@ -113,7 +125,20 @@ export default class UserStore {
     }
   };
 
+  //Set Role
+  @action setRole = async (email: String, role: String) => {
+    try {
+      const user = await agent.Users.setRole(email, role);
+      runInAction(() => {
+        this.usersRegistry.set(user.email, user);
+      });
+    } catch (error) {
+      toast.error('Problem edit role User');
+    }
+  };
+
   @action logout = () => {
+    this._rootStore.commonStore.setToken(null);
     this.user = null;
     history.push('/');
   };

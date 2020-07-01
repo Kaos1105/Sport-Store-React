@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import NavBar from '../../features/nav/NavBar';
 import { observer } from 'mobx-react-lite';
@@ -19,13 +19,25 @@ import OrderForm from '../../features/orders/form/OrderForm';
 import ImportDashboard from '../../features/importss/dashboard/ImportDashboard';
 import ImportDetails from '../../features/importss/details/ImportDetails';
 import ImportForm from '../../features/importss/form/ImportForm';
+import { RootStoreContext } from '../stores/rootStore';
+import LoadingComponent from './LoadingComponent';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
-  //const rootStore = useContext(RootStoreContext);
-  //const { setAppLoaded, appLoaded } = rootStore.commonStore;
+  const rootStore = useContext(RootStoreContext);
+  const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
+  const { getUser } = rootStore.userStore;
 
-  //if (!appLoaded) return <LoadingComponent content='Loading app...' />;
+  //get user from token when refresh App.tsx or re-render App.tsx
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded());
+    } else {
+      setAppLoaded();
+    }
+  }, [getUser, setAppLoaded, token]);
+
+  if (!appLoaded) return <LoadingComponent content='Loading app...' />;
 
   return (
     <Fragment>

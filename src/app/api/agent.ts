@@ -12,16 +12,16 @@ import { IImportEnvelope, IImport } from '../models/import';
 axios.defaults.baseURL = 'http://localhost:8080/SportsStore-1.0/rest';
 
 //add token to request header
-// axios.interceptors.request.use(
-//   (config) => {
-//     const token = window.localStorage.getItem('jwt');
-//     if (token) config.headers.Authorization = `Bearer ${token}`;
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+axios.interceptors.request.use(
+  (config) => {
+    const token = window.localStorage.getItem('jwt');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 //error handle from response
 axios.interceptors.response.use(undefined, (error) => {
@@ -38,6 +38,9 @@ axios.interceptors.response.use(undefined, (error) => {
   }
   if (status === 500) {
     toast.error('SEVER ERROR-check the terminal error for more info!');
+  }
+  if (status === 403) {
+    toast.error('Your action is forbidden, please contact site admin for more info!');
   }
   throw error.response;
 });
@@ -89,11 +92,14 @@ const ProductOptions = {
 };
 
 const Users = {
+  current: (): Promise<IUser> => requests.get('/users'),
   login: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/login`, user),
   register: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/register`, user),
   edit: (user: IUserFormValues) => requests.put(`/users/`, user),
   delete: (email: String) => requests.delete(`/users/${email}`),
-  getEmployee: (): Promise<IUser[]> => requests.get('/users'),
+  getEmployee: (): Promise<IUser[]> => requests.get('/users/getEmployees'),
+  setRole: (email: String, role: String): Promise<IUser> =>
+    requests.put(`/users/${email}+?role=${role}`, {}),
 };
 
 const Orders = {

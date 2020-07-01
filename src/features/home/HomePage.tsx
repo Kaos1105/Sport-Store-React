@@ -3,7 +3,6 @@ import { Container, Segment, Header, Button, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { RootStoreContext } from '../../app/stores/rootStore';
 import LoginForm from '../user/LoginForm';
-import RegisterForm from '../user/RegisterForm';
 //import { RootStoreContext } from '../../app/stores/rootStore';
 // import LoginForm from '../user/LoginForm';
 // import RegisterForm from '../user/RegisterForm';
@@ -32,9 +31,6 @@ const HomePage = () => {
             <Header as='h2' inverted content={`Welcome SportsStore Management`} />
             <Button onClick={() => openModal(<LoginForm />)} size='huge' inverted>
               Login
-            </Button>
-            <Button onClick={() => openModal(<RegisterForm />)} size='huge' inverted>
-              Register
             </Button>
           </Fragment>
         )}

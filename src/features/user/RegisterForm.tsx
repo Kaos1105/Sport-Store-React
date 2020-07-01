@@ -7,12 +7,20 @@ import { IUserFormValues } from '../../app/models/user';
 import { FORM_ERROR } from 'final-form';
 import { combineValidators, isRequired } from 'revalidate';
 import ErrorMessage from '../../app/common/form/ErrorMessage';
+import SelectInput from '../../app/common/form/SelectInput';
 
 const validate = combineValidators({
   userName: isRequired('Username'),
   email: isRequired('Email'),
   password: isRequired('Password'),
+  role: isRequired('Role'),
 });
+
+const options = [
+  { key: 'admin', text: 'Admin', value: 'Admin' },
+  { key: 'employee', text: 'Employee', value: 'Employee' },
+  { key: 'customer', text: 'Customer', value: 'Customer' },
+];
 
 const RegisterForm = () => {
   const rootStore = useContext(RootStoreContext);
@@ -36,6 +44,7 @@ const RegisterForm = () => {
         <Form onSubmit={handleSubmit} error>
           <Header as='h2' content='Sign up to SportsStore' color='teal' textAlign='center' />
           <Field name='userName' component={TextInput} placeholder='UserName' />
+          <Field name='role' placeholder='Role' component={SelectInput} options={options} />
           <Field name='email' component={TextInput} placeholder='Email' />
           <Field name='password' component={TextInput} placeholder='Password' type='password' />
           {submitError && !dirtySinceLastSubmit && (

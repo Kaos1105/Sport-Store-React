@@ -3,11 +3,13 @@ import { Menu, Container, Button, Dropdown, Image } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 import { RootStoreContext } from '../../app/stores/rootStore';
+import RegisterForm from '../user/RegisterForm';
 //import { RootStoreContext } from '../../app/stores/rootStore';
 
 const NavBar: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { user, logout } = rootStore.userStore;
+  const { openModal } = rootStore.modalStore;
 
   return (
     <Menu inverted fixed='top'>
@@ -22,6 +24,14 @@ const NavBar: React.FC = () => {
         </Menu.Item> */}
         <Menu.Item name='Orders' as={NavLink} to='/orders' />
         <Menu.Item name='Imports' as={NavLink} to='/imports' />
+        {user?.role === 'Admin' && (
+          <Menu.Item>
+            <Button onClick={() => openModal(<RegisterForm />)} size='huge' inverted>
+              Register
+            </Button>
+          </Menu.Item>
+        )}
+
         <Menu.Item>
           <Dropdown pointing='top left' text='Create' labeled button className='button teal icon'>
             <Dropdown.Menu>

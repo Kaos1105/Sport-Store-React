@@ -2,11 +2,13 @@ export interface IUser {
   id: number;
   userName: string;
   email: string;
-  isAdmin: boolean;
+  role: string;
+  token: string;
 }
 
 export interface IUserFormValues {
   email: string;
   password: string;
   userName?: string;
+  role: string;
 }
