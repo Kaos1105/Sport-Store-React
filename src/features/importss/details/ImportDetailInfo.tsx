@@ -11,18 +11,24 @@ const ImportDetailInfo: React.FC<{ importDTO: IImport }> = ({ importDTO }) => {
     <Segment.Group key={importDTO.id}>
       <Segment attached='top'>
         <Grid>
+          <Grid.Column width={13}>
+            <Icon size='large' color='teal' name='caret square down' />
+            <span>Import ID: {importDTO.id}</span>
+          </Grid.Column>
+          <Grid.Column>
+            <Button
+              // onClick={() => selectActivity(activity.id)}
+              attached='right'
+              as={Link}
+              to={`/imports/${importDTO.id}/manage`}
+              color='orange'
+              content='Edit'
+            />
+          </Grid.Column>
           <Grid.Column width={14}>
             <Icon size='large' color='teal' name='address card outline' />
             <span>Wholesaler Name: {importDTO.wholesalerName}</span>
           </Grid.Column>
-          <Button
-            // onClick={() => selectActivity(activity.id)}
-            attached='right'
-            as={Link}
-            to={`/imports/${importDTO.id}/manage`}
-            color='orange'
-            content='Edit'
-          />
         </Grid>
       </Segment>
       <Segment>
@@ -34,6 +40,10 @@ const ImportDetailInfo: React.FC<{ importDTO: IImport }> = ({ importDTO }) => {
           <Grid.Column width={10}>
             <Icon size='large' color='teal' name='phone' />
             <span>Wholesaler Phone: {importDTO.wholesalerPhone}</span>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Icon size='large' color='teal' name='check square' />
+            <span>Status: {importDTO.status}</span>
           </Grid.Column>
         </Grid>
       </Segment>

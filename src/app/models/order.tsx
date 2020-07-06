@@ -6,6 +6,7 @@ export interface IOrder {
   recipientAddress: string;
   recipientPhone: string;
   placementDate: Date;
+  status: string;
   products: IProductOrder[];
 }
 
@@ -27,6 +28,7 @@ export class OrderFormValues implements IOrderFormValues {
   recipientAddress: string = '';
   recipientPhone: string = '';
   placementDate?: Date = undefined;
+  status: string = '';
 
   constructor(init?: IOrderFormValues) {
     if (init && init.placementDate) {

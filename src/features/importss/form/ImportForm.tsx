@@ -10,6 +10,8 @@ import { combineValidators, isRequired, composeValidators, isNumeric } from 'rev
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 import { ImportFormValues } from '../../../app/models/import';
+import SelectInput from '../../../app/common/form/SelectInput';
+import { statusOptions } from '../../../app/common/sample/statusOptions';
 
 const validate = combineValidators({
   wholesalerName: isRequired('Name'),
@@ -67,7 +69,7 @@ const ImportForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histor
             validate={validate}
             initialValues={importDTO}
             onSubmit={handleFinalFormSubmit}
-            render={({ handleSubmit, invalid, pristine }) => (
+            render={({ handleSubmit, invalid }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
                 <Label>Name</Label>
                 <Field
@@ -101,9 +103,26 @@ const ImportForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histor
                   value={parseInt(importDTO.wholesalerPhone)}
                   component={NumberInput}
                 />
+                <Label>Status</Label>
+                {importDTO.status === statusOptions[1].value || importDTO.status === '' ? (
+                  <Field
+                    name='status'
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={statusOptions}
+                  />
+                ) : (
+                  <Field
+                    name='status'
+                    disabled={true}
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={statusOptions}
+                  />
+                )}
                 <Button
                   loading={submitting}
-                  disabled={loading || pristine || invalid}
+                  disabled={loading || invalid}
                   floated='right'
                   positive
                   type='submit'

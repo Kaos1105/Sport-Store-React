@@ -15,11 +15,12 @@ const ImportList: React.FC = () => {
         <Table key='table data' celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Index</Table.HeaderCell>
+              <Table.HeaderCell>Import ID</Table.HeaderCell>
               <Table.HeaderCell>Wholesaler Name</Table.HeaderCell>
               <Table.HeaderCell>Wholesaler Address</Table.HeaderCell>
               <Table.HeaderCell>Wholesaler Phone</Table.HeaderCell>
               <Table.HeaderCell>Placement Date</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

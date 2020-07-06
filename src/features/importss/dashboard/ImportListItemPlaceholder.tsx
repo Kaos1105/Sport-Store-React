@@ -7,7 +7,7 @@ const ImportListItemPlaceholder = () => {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>
-            <Placeholder.Paragraph>Index</Placeholder.Paragraph>
+            <Placeholder.Paragraph>Import ID</Placeholder.Paragraph>
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Placeholder.Paragraph>Wholesaler Name</Placeholder.Paragraph>
@@ -20,6 +20,9 @@ const ImportListItemPlaceholder = () => {
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Placeholder.Paragraph>Placement Date</Placeholder.Paragraph>
+          </Table.HeaderCell>
+          <Table.HeaderCell>
+            <Placeholder.Paragraph>Status</Placeholder.Paragraph>
           </Table.HeaderCell>
           <Table.HeaderCell>
             <Placeholder.Paragraph>Action</Placeholder.Paragraph>
@@ -47,23 +50,6 @@ const ImportListItemPlaceholder = () => {
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>
@@ -72,23 +58,6 @@ const ImportListItemPlaceholder = () => {
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-          <Table.Cell>
-            <Placeholder.Paragraph>........</Placeholder.Paragraph>
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>
@@ -127,8 +96,60 @@ const ImportListItemPlaceholder = () => {
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
         </Table.Row>
         <Table.Row>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>
+            <Placeholder.Paragraph>........</Placeholder.Paragraph>
+          </Table.Cell>
           <Table.Cell>
             <Placeholder.Paragraph>........</Placeholder.Paragraph>
           </Table.Cell>

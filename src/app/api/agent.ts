@@ -2,10 +2,11 @@ import axios, { AxiosResponse } from 'axios';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { IProduct, IProductEnvelope, IPhoto } from '../models/product';
-import { IProductOption } from '../common/sample/productOptions';
+import { IProductOption, IShipmentOption } from '../common/sample/productOptions';
 import { IUser, IUserFormValues } from '../models/user';
 import { IOrderEnvelope, IOrder } from '../models/order';
 import { IImportEnvelope, IImport } from '../models/import';
+import { IShipment, IShipmentEnvelope } from '../models/shipment';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
 
@@ -95,11 +96,11 @@ const Users = {
   current: (): Promise<IUser> => requests.get('/users'),
   login: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/login`, user),
   register: (user: IUserFormValues): Promise<IUser> => requests.post(`/users/register`, user),
-  edit: (user: IUserFormValues) => requests.put(`/users/`, user),
+  edit: (user: IUserFormValues): Promise<IUser> => requests.put(`/users/`, user),
   delete: (email: String) => requests.delete(`/users/${email}`),
   getEmployee: (): Promise<IUser[]> => requests.get('/users/getEmployees'),
   setRole: (email: String, role: String): Promise<IUser> =>
-    requests.put(`/users/${email}+?role=${role}`, {}),
+    requests.put(`/users/${email}?role=${role}`, {}),
 };
 
 const Orders = {
@@ -120,6 +121,28 @@ const Imports = {
   delete: (id: string) => requests.delete(`/imports/${id}`),
 };
 
+const ImportShipment = {
+  list: (params: URLSearchParams): Promise<IShipmentEnvelope> =>
+    axios.get('/importShipment', { params: params }).then(sleep(400)).then(responseBody),
+  details: (id: string) => requests.get(`/importShipment/${id}`),
+  create: (imShipment: IShipment) => requests.post('/importShipment', imShipment),
+  update: (imShipment: IShipment) => requests.put(`/importShipment/${imShipment.id}`, imShipment),
+  delete: (id: string) => requests.delete(`/importShipment/${id}`),
+};
+
+const OrderShipment = {
+  list: (params: URLSearchParams): Promise<IShipmentEnvelope> =>
+    axios.get('/orderShipment', { params: params }).then(sleep(400)).then(responseBody),
+  details: (id: string) => requests.get(`/orderShipment/${id}`),
+  create: (orShipment: IShipment) => requests.post('/orderShipment', orShipment),
+  update: (orShipment: IShipment) => requests.put(`/orderShipment/${orShipment.id}`, orShipment),
+  delete: (id: string) => requests.delete(`/orderShipment/${id}`),
+};
+
+const ShipmentOptions = {
+  list: (): Promise<IShipmentOption> => requests.get('/shipmentOptions'),
+};
+
 export default {
   Product,
   ProductOptions,
@@ -127,4 +150,7 @@ export default {
   Users,
   Orders,
   Imports,
+  ImportShipment,
+  OrderShipment,
+  ShipmentOptions,
 };

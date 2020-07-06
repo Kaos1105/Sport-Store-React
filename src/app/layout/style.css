@@ -56,4 +56,18 @@ code {
 .imageOrderCell {
   height: 5em;
 }
+
+.ui.input {
+  max-width: 10em;
+}
+
+.ui.search.selection.dropdown {
+  max-width: 12em;
+  min-width: 10em;
+}
+
+.ui.search.dropdown {
+  max-width: 12em;
+  min-width: 10em;
+}
 /*end home page styles*/

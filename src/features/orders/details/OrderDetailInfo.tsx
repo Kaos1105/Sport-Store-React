@@ -11,18 +11,24 @@ const OrderDetailInfo: React.FC<{ order: IOrder }> = ({ order }) => {
     <Segment.Group key={order.id}>
       <Segment attached='top'>
         <Grid>
+          <Grid.Column width={13}>
+            <Icon size='large' color='teal' name='caret square down' />
+            <span>Order ID: {order.id}</span>
+          </Grid.Column>
+          <Grid.Column>
+            <Button
+              // onClick={() => selectActivity(activity.id)}
+              attached='right'
+              as={Link}
+              to={`/orders/${order.id}/manage`}
+              color='orange'
+              content='Edit'
+            />
+          </Grid.Column>
           <Grid.Column width={14}>
             <Icon size='large' color='teal' name='address card outline' />
             <span>Recipient Name: {order.recipientName}</span>
           </Grid.Column>
-          <Button
-            // onClick={() => selectActivity(activity.id)}
-            attached='right'
-            as={Link}
-            to={`/orders/${order.id}/manage`}
-            color='orange'
-            content='Edit'
-          />
         </Grid>
       </Segment>
       <Segment>
@@ -34,6 +40,10 @@ const OrderDetailInfo: React.FC<{ order: IOrder }> = ({ order }) => {
           <Grid.Column width={10}>
             <Icon size='large' color='teal' name='phone' />
             <span>Recipient Phone: {order.recipientPhone}</span>
+          </Grid.Column>
+          <Grid.Column width={10}>
+            <Icon size='large' color='teal' name='check square' />
+            <span>Status: {order.status}</span>
           </Grid.Column>
         </Grid>
       </Segment>

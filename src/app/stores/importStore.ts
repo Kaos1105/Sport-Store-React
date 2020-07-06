@@ -239,18 +239,17 @@ export default class ImportStore {
             product: this.selectedProduct!,
             quantity: this.quantity,
           };
+          let isProductContained: boolean = false;
           if (this.selectedImport!.products.length == 0)
             this.selectedImport?.products.push(productImport);
           else {
             for (let iterator of this.selectedImport!.products) {
               if (iterator.product.id === productImport.product.id) {
                 iterator.quantity += productImport.quantity;
-                break;
-              } else {
-                this.selectedImport?.products.push(productImport);
-                break;
+                isProductContained = true;
               }
             }
+            if (!isProductContained) this.selectedImport?.products.push(productImport);
           }
         });
       } catch (error) {

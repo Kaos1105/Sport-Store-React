@@ -8,6 +8,9 @@ import UserStore from './userStore';
 import OrderStore from './orderStore';
 import OrderOptionsStore from './orderProductOptionsStore';
 import ImportStore from './importStore';
+import ShipmentOptionsStore from './shipmentOptionsStore';
+import ImportShipmentStore from './importShipmentStore';
+import OrderShipmentStore from './orderShipmentStore';
 
 configure({ enforceActions: 'always' });
 
@@ -20,6 +23,9 @@ export class RootStore {
   orderStore: OrderStore;
   importStore: ImportStore;
   orderOptions: OrderOptionsStore;
+  shipmentOptions: ShipmentOptionsStore;
+  importShipmentStore: ImportShipmentStore;
+  orderShipmentStore: OrderShipmentStore;
 
   constructor() {
     this.productStore = new ProductStore(this);
@@ -30,6 +36,9 @@ export class RootStore {
     this.orderStore = new OrderStore(this);
     this.orderOptions = new OrderOptionsStore(this);
     this.importStore = new ImportStore(this);
+    this.shipmentOptions = new ShipmentOptionsStore(this);
+    this.importShipmentStore = new ImportShipmentStore(this);
+    this.orderShipmentStore = new OrderShipmentStore(this);
   }
 }
 

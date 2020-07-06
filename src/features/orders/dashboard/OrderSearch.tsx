@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
+import { Table, Button, Icon, Dropdown } from 'semantic-ui-react';
 import React from 'react';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { DateTimePicker } from 'react-widgets';
+import { statusOptions } from '../../../app/common/sample/statusOptions';
 
 interface IProps {}
 
@@ -58,6 +59,18 @@ const OrderSearch: React.FC<IProps> = () => {
             console.log(date?.toISOString() + '--' + dateParam);
             setPredicate('date', dateParam!);
           }}
+        />
+      </Table.Cell>
+      <Table.Cell>
+        <Dropdown
+          fluid={false}
+          placeholder='Select Status'
+          search
+          selection
+          onChange={(e, data) => {
+            setPredicate('status', data.value!.toString());
+          }}
+          options={statusOptions}
         />
       </Table.Cell>
       <Table.Cell textAlign='center'>

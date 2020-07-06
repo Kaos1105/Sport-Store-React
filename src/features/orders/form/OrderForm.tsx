@@ -10,12 +10,15 @@ import { combineValidators, isRequired, composeValidators, isNumeric } from 'rev
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 import { OrderFormValues } from '../../../app/models/order';
+import { statusOptions } from '../../../app/common/sample/statusOptions';
+import SelectInput from '../../../app/common/form/SelectInput';
 
 const validate = combineValidators({
   recipientName: isRequired('Name'),
   recipientAddress: isRequired('Address'),
   recipientPhone: composeValidators(isRequired('Phone'), isNumeric('Phone'))(),
   placementDate: isRequired('Date'),
+  status: isRequired('Status'),
 });
 
 interface DetailParams {
@@ -67,7 +70,7 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
             validate={validate}
             initialValues={order}
             onSubmit={handleFinalFormSubmit}
-            render={({ handleSubmit, invalid, pristine }) => (
+            render={({ handleSubmit, invalid }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
                 <Label>Name</Label>
                 <Field
@@ -101,9 +104,27 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
                   value={parseInt(order.recipientPhone)}
                   component={NumberInput}
                 />
+                <Label>Status</Label>
+                {order.status === statusOptions[1].value || order.status === '' ? (
+                  <Field
+                    name='status'
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={statusOptions}
+                  />
+                ) : (
+                  <Field
+                    name='status'
+                    disabled={true}
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={statusOptions}
+                  />
+                )}
+
                 <Button
                   loading={submitting}
-                  disabled={loading || pristine || invalid}
+                  disabled={loading || invalid}
                   floated='right'
                   positive
                   type='submit'

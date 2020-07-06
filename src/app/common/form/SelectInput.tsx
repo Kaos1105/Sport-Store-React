@@ -9,10 +9,11 @@ const SelectInput: React.FC<IProps> = ({
   width,
   options,
   placeholder,
+  disabled,
   meta: { touched, error },
 }) => {
   return (
-    <Form.Field error={touched && !!error} width={width}>
+    <Form.Field error={touched && !!error} width={width} disabled={disabled}>
       <Select
         value={input.value}
         onChange={(e, data) => input.onChange(data.value)}

@@ -12,8 +12,8 @@ const ImportListItem: React.FC<{ importDTO: IImport; index: number }> = ({ impor
 
   const timeZone = 'Asia/Bangkok';
   return (
-    <Table.Row key={importDTO.id}>
-      <Table.Cell>{index}</Table.Cell>
+    <Table.Row key={index}>
+      <Table.Cell>{importDTO.id}</Table.Cell>
       <Table.Cell>
         <Label color='green' key={importDTO.id} size='large' as={Link} to={`#`}>
           {importDTO.wholesalerName}
@@ -26,6 +26,7 @@ const ImportListItem: React.FC<{ importDTO: IImport; index: number }> = ({ impor
           timeZone: timeZone,
         })}
       </Table.Cell>
+      <Table.Cell>{importDTO.status}</Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
           <Button // onClick={() => selectActivity(activity.id)}

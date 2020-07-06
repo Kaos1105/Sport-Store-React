@@ -22,3 +22,14 @@ export interface IOrderProductOptions {
   value: string;
   text: string;
 }
+
+export interface IShipmentOption {
+  importFilterID: string[];
+  orderFilterID: string[];
+}
+
+export interface IShipmentIdOptions {
+  key: string;
+  value: string;
+  text: string;
+}

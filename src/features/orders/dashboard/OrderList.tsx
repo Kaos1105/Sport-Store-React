@@ -15,11 +15,12 @@ const OrderList: React.FC = () => {
         <Table key='table data' celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Index</Table.HeaderCell>
+              <Table.HeaderCell>Order ID</Table.HeaderCell>
               <Table.HeaderCell>Recipient Name</Table.HeaderCell>
               <Table.HeaderCell>Recipient Address</Table.HeaderCell>
               <Table.HeaderCell>Recipient Phone</Table.HeaderCell>
               <Table.HeaderCell>Placement Date</Table.HeaderCell>
+              <Table.HeaderCell>Status</Table.HeaderCell>
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

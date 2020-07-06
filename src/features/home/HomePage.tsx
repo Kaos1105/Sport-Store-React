@@ -23,7 +23,7 @@ const HomePage = () => {
           <Fragment>
             <Header as='h2' inverted content={`Welcome back ${user.userName}`} />
             <Button as={Link} to='/products' size='huge' inverted>
-              Go to activities
+              Go to Sports Store
             </Button>
           </Fragment>
         ) : (

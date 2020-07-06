@@ -6,6 +6,7 @@ export interface IImport {
   wholesalerAddress: string;
   wholesalerPhone: string;
   placementDate: Date;
+  status: string;
   products: IProductImport[];
 }
 
@@ -27,6 +28,7 @@ export class ImportFormValues implements IImportFormValues {
   wholesalerAddress: string = '';
   wholesalerPhone: string = '';
   placementDate?: Date = undefined;
+  status: string = '';
 
   constructor(init?: IImportFormValues) {
     if (init && init.placementDate) {

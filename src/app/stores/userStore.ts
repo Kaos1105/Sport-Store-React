@@ -14,8 +14,11 @@ export default class UserStore {
 
   @observable user: IUser | null = null;
 
-  ////Observable map
+  //Observable map
   @observable usersRegistry = new Map();
+
+  //Observable edit role map
+  @observable rolesRegistry = new Map();
 
   //List
   @observable loadingInitial = false;
@@ -23,6 +26,9 @@ export default class UserStore {
   //Delete
   @observable submitting = false;
   @observable targetDelete = '';
+
+  //Update
+  @observable targetUpdate = '';
 
   @computed get isLoggedIn() {
     return !!this.user;
@@ -81,6 +87,7 @@ export default class UserStore {
         this.usersRegistry.clear();
         employees.forEach((user) => {
           this.usersRegistry.set(user.email, user);
+          this.rolesRegistry.set(user.email, user.role);
         });
       });
     } catch (error) {
@@ -116,17 +123,24 @@ export default class UserStore {
   //Edit
   @action updateUser = async (user: IUserFormValues) => {
     try {
-      await agent.Users.edit(user);
+      user.email = this.user?.email!;
+      const editedUser = await agent.Users.edit(user);
+
       runInAction(() => {
-        this.usersRegistry.set(user.email, user);
+        this.usersRegistry.set(user.email, editedUser);
+        this.user = editedUser;
       });
+      this._rootStore.modalStore.closeModal();
     } catch (error) {
       toast.error('Problem updating User');
     }
   };
 
   //Set Role
-  @action setRole = async (email: String, role: String) => {
+  @action setRole = async (event: SyntheticEvent<HTMLButtonElement>, role: String) => {
+    this.submitting = true;
+    this.targetUpdate = event.currentTarget.name;
+    let email = this.targetUpdate;
     try {
       const user = await agent.Users.setRole(email, role);
       runInAction(() => {
@@ -134,6 +148,24 @@ export default class UserStore {
       });
     } catch (error) {
       toast.error('Problem edit role User');
+    } finally {
+      runInAction('finished deleting', () => {
+        this.submitting = false;
+        this.targetUpdate = '';
+      });
+    }
+  };
+
+  //Set Registry
+  @action setRegistryRole = async (email: String, role: String) => {
+    try {
+      runInAction(() => {
+        this.rolesRegistry.set(email, role);
+      });
+    } catch (error) {
+      toast.error('Problem set role User');
+    } finally {
+      runInAction('finished set', () => {});
     }
   };
 

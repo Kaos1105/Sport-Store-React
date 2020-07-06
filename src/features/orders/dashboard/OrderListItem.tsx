@@ -12,8 +12,8 @@ const OrderListItem: React.FC<{ order: IOrder; index: number }> = ({ order, inde
 
   const timeZone = 'Asia/Bangkok';
   return (
-    <Table.Row key={order.id}>
-      <Table.Cell>{index}</Table.Cell>
+    <Table.Row key={index}>
+      <Table.Cell>{order.id}</Table.Cell>
       <Table.Cell>
         <Label color='green' key={order.id} size='large' as={Link} to={`#`}>
           {order.recipientName}
@@ -26,6 +26,7 @@ const OrderListItem: React.FC<{ order: IOrder; index: number }> = ({ order, inde
           timeZone: timeZone,
         })}
       </Table.Cell>
+      <Table.Cell>{order.status}</Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
           <Button // onClick={() => selectActivity(activity.id)}

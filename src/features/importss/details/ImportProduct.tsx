@@ -5,6 +5,7 @@ import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
 import { createBrowserHistory } from 'history';
+import TableToExcel from '../../../app/common/exportTable/TableToExcel';
 
 const ImportProduct = () => {
   const rootStore = useContext(RootStoreContext);
@@ -21,13 +22,15 @@ const ImportProduct = () => {
   } = rootStore.importStore;
   const history = createBrowserHistory();
 
+  const tableId = 'importTable';
+
   useEffect(() => {
     loadOptions();
   }, [loadOptions]);
 
   var total: number = 0;
   return (
-    <Table celled>
+    <Table celled id={tableId}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Product</Table.HeaderCell>
@@ -103,17 +106,15 @@ const ImportProduct = () => {
             </Table.Cell>
             <Table.Cell>{productsImport.product.importPrice}</Table.Cell>
             <Table.Cell>{productsImport.quantity}</Table.Cell>
-            <Table.Cell>
-              {productsImport.quantity * productsImport.product.importPrice}
-              <div hidden>
-                {(total += productsImport.quantity * productsImport.product.importPrice)}
-              </div>
-            </Table.Cell>
+            <Table.Cell>{productsImport.quantity * productsImport.product.importPrice}</Table.Cell>
             <Table.Cell textAlign='center'>
               <Button.Group>
                 <Button as={Link} to={`/products/${productsImport.product.id}`} color='blue'>
                   <Icon name='search plus' />
                 </Button>
+                <div hidden>
+                  {(total += productsImport.quantity * productsImport.product.importPrice)}
+                </div>
               </Button.Group>
             </Table.Cell>
           </Table.Row>
@@ -141,7 +142,7 @@ const ImportProduct = () => {
                 Submit
               </Button>
             ) : (
-              <Button color='blue'>Export to file</Button>
+              <TableToExcel table={tableId} />
             )}
           </Table.HeaderCell>
         </Table.Row>

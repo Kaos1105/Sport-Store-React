@@ -21,6 +21,13 @@ import ImportDetails from '../../features/importss/details/ImportDetails';
 import ImportForm from '../../features/importss/form/ImportForm';
 import { RootStoreContext } from '../stores/rootStore';
 import LoadingComponent from './LoadingComponent';
+import UserList from '../../features/user/UserList';
+import ImShipmentDashboard from '../../features/imShipments/dashboard/ImShipmentDashboard';
+import ImShipmentDetails from '../../features/imShipments/details/ImShipmentDetails';
+import ImShipmentForm from '../../features/imShipments/form/ImShipmentForm';
+import OrShipmentDashboard from '../../features/orShipments/dashboard/OrShipmentDashboard';
+import OrShipmentDetails from '../../features/orShipments/details/OrShipmentDetails';
+import OrShipmentForm from '../../features/orShipments/form/OrShipmentForm';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -74,6 +81,24 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={['/importCreate', '/imports/:id/manage']}
                   component={ImportForm}
                 />
+
+                <Route exact path='/importShipment' component={ImShipmentDashboard} />
+                <Route exact path='/importShipment/:id' component={ImShipmentDetails} />
+                <Route
+                  key={location.key}
+                  path={['/importShipmentCreate', '/importShipment/:id/manage']}
+                  component={ImShipmentForm}
+                />
+
+                <Route exact path='/orderShipment' component={OrShipmentDashboard} />
+                <Route exact path='/orderShipment/:id' component={OrShipmentDetails} />
+                <Route
+                  key={location.key}
+                  path={['/orderShipmentCreate', '/orderShipment/:id/manage']}
+                  component={OrShipmentForm}
+                />
+
+                <Route exact path='/users/manage' component={UserList} />
 
                 <Route component={NotFound} />
               </Switch>

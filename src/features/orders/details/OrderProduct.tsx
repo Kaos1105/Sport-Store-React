@@ -5,6 +5,7 @@ import { RootStoreContext } from '../../../app/stores/rootStore';
 import { observer } from 'mobx-react-lite';
 import { toast } from 'react-toastify';
 import { createBrowserHistory } from 'history';
+import TableToExcel from '../../../app/common/exportTable/TableToExcel';
 
 const OrderProduct = () => {
   const rootStore = useContext(RootStoreContext);
@@ -21,13 +22,15 @@ const OrderProduct = () => {
   } = rootStore.orderStore;
   const history = createBrowserHistory();
 
+  const tableId = 'orderTable';
+
   useEffect(() => {
     loadOptions();
   }, [loadOptions]);
 
   var total: number = 0;
   return (
-    <Table celled>
+    <Table celled id={tableId}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Product</Table.HeaderCell>
@@ -103,15 +106,13 @@ const OrderProduct = () => {
             </Table.Cell>
             <Table.Cell>{productsOrder.product.price}</Table.Cell>
             <Table.Cell>{productsOrder.quantity}</Table.Cell>
-            <Table.Cell>
-              {productsOrder.quantity * productsOrder.product.price}
-              <div hidden>{(total += productsOrder.quantity * productsOrder.product.price)}</div>
-            </Table.Cell>
+            <Table.Cell>{productsOrder.quantity * productsOrder.product.price}</Table.Cell>
             <Table.Cell textAlign='center'>
               <Button.Group>
                 <Button as={Link} to={`/products/${productsOrder.product.id}`} color='blue'>
                   <Icon name='search plus' />
                 </Button>
+                <div hidden>{(total += productsOrder.quantity * productsOrder.product.price)}</div>
               </Button.Group>
             </Table.Cell>
           </Table.Row>
@@ -139,7 +140,7 @@ const OrderProduct = () => {
                 Submit
               </Button>
             ) : (
-              <Button color='blue'>Export to file</Button>
+              <TableToExcel table={tableId} />
             )}
           </Table.HeaderCell>
         </Table.Row>
