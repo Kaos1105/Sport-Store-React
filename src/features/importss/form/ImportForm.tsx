@@ -32,6 +32,8 @@ const ImportForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histor
   const [importDTO, setImport] = useState(new ImportFormValues());
   const [loading, setLoading] = useState(false);
 
+  var options = statusOptions.filter((x) => x.value !== statusOptions[2].value);
+
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
@@ -104,14 +106,23 @@ const ImportForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, histor
                   component={NumberInput}
                 />
                 <Label>Status</Label>
-                {importDTO.status === statusOptions[1].value || importDTO.status === '' ? (
+                {importDTO.status === statusOptions[1].value && (
                   <Field
                     name='status'
                     placeholder='Status'
                     component={SelectInput}
                     options={statusOptions}
                   />
-                ) : (
+                )}
+                {importDTO.status === '' && (
+                  <Field
+                    name='status'
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={options}
+                  />
+                )}
+                {importDTO.status !== statusOptions[1].value && importDTO.status !== '' && (
                   <Field
                     name='status'
                     disabled={true}

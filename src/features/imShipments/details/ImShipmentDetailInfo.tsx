@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
+import { Segment, Grid, Icon, Button, Label } from 'semantic-ui-react';
 import { format, zonedTimeToUtc } from 'date-fns-tz';
 import { Link } from 'react-router-dom';
 import { IShipment } from '../../../app/models/shipment';
@@ -13,7 +13,9 @@ const ImShipmentDetailInfo: React.FC<{ shipment: IShipment }> = ({ shipment }) =
         <Grid>
           <Grid.Column width={14}>
             <Icon size='large' color='teal' name='address card outline' />
-            <span>Import ID: {shipment.importID}</span>
+            <Label as={Link} to={`/imports/${shipment.importID}`} color='teal'>
+              Import ID: {shipment.importID}
+            </Label>
           </Grid.Column>
           <Button
             // onClick={() => selectActivity(activity.id)}

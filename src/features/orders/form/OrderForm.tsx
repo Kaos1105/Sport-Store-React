@@ -33,6 +33,8 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
   const [order, setOrder] = useState(new OrderFormValues());
   const [loading, setLoading] = useState(false);
 
+  var options = statusOptions.filter((x) => x.value !== statusOptions[2].value);
+
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
@@ -105,14 +107,23 @@ const OrderForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history
                   component={NumberInput}
                 />
                 <Label>Status</Label>
-                {order.status === statusOptions[1].value || order.status === '' ? (
+                {order.status === statusOptions[1].value && (
                   <Field
                     name='status'
                     placeholder='Status'
                     component={SelectInput}
                     options={statusOptions}
                   />
-                ) : (
+                )}
+                {order.status === '' && (
+                  <Field
+                    name='status'
+                    placeholder='Status'
+                    component={SelectInput}
+                    options={options}
+                  />
+                )}
+                {order.status !== statusOptions[1].value && order.status !== '' && (
                   <Field
                     name='status'
                     disabled={true}
