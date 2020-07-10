@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Table, Button, Dropdown, Icon } from 'semantic-ui-react';
 import React from 'react';
 import { RootStoreContext } from '../../../app/stores/rootStore';
@@ -10,6 +10,7 @@ const ProductSearch: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
   const { setPredicate, loadFilters } = rootStore.productStore;
   const { loadOptions, categoryOptionsRegistry, brandOptionsRegistry } = rootStore.productOptions;
+  const [cleared, setClear] = useState(false);
 
   useEffect(() => {
     loadOptions();
@@ -73,6 +74,7 @@ const ProductSearch: React.FC<IProps> = () => {
           <Button
             color='grey'
             onClick={() => {
+              setClear(true);
               loadFilters(true);
             }}
           >

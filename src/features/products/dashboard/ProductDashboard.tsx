@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, Fragment, useState } from 'react';
-import { Grid, Table } from 'semantic-ui-react';
+import { Grid, Table, Tab } from 'semantic-ui-react';
 import ProductList from './ProductList';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';

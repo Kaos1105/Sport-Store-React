@@ -7,13 +7,24 @@ import IncomeListItem from './IncomeListItem';
 
 const IncomeList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { incomeRegistry } = rootStore.incomeStore;
+  const { incomeRegistry, predicate } = rootStore.incomeStore;
+  const { productOptionsRegistry } = rootStore.orderOptions;
   const lstIncome = Array.from(incomeRegistry.values());
   return (
     <Fragment>
       <Item.Group divided>
         <Table key='table data' celled>
           <Table.Header>
+            <IncomeSearch />
+            <Table.Row>
+              <Table.HeaderCell colSpan='2'>{predicate.get('begin')}</Table.HeaderCell>
+              <Table.HeaderCell colSpan='2'>{predicate.get('end')}</Table.HeaderCell>
+              <Table.HeaderCell>
+                {productOptionsRegistry.find((element) => element.key == predicate.get('id'))
+                  ?.text || 0}
+              </Table.HeaderCell>
+              <Table.HeaderCell></Table.HeaderCell>
+            </Table.Row>
             <Table.Row>
               <Table.HeaderCell>Year</Table.HeaderCell>
               <Table.HeaderCell>Month</Table.HeaderCell>

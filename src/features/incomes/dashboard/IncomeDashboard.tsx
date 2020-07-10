@@ -36,7 +36,6 @@ const IncomeDashboard: React.FC = () => {
   return (
     <Fragment>
       <PaginationIncome handlePageChange={handleGetNext} />
-      <IncomeSearch />
       <Grid>
         <Grid.Column width='16'>
           {loadingInitial ? <IncomeListItemPlaceHolder /> : <IncomeList />}

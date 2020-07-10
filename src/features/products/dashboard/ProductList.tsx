@@ -7,7 +7,7 @@ import ProductSearch from './ProductSearch';
 
 const ProductList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { productRegistry } = rootStore.productStore;
+  const { productRegistry, predicate } = rootStore.productStore;
   const lstProduct = Array.from(productRegistry.values());
   return (
     <Table key='table data' celled>
@@ -21,9 +21,16 @@ const ProductList: React.FC = () => {
           <Table.HeaderCell>Action</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-
       <Table.Body>
         <ProductSearch />
+        <Table.Row>
+          <Table.Cell>0</Table.Cell>
+          <Table.Cell>{predicate.get('name')}</Table.Cell>
+          <Table.Cell>{predicate.get('category')}</Table.Cell>
+          <Table.Cell>{predicate.get('brand')}</Table.Cell>
+          <Table.Cell>{predicate.get('stock')}</Table.Cell>
+          <Table.Cell></Table.Cell>
+        </Table.Row>
         {lstProduct.map((product, index) => (
           <ProductListItem key={product.id} product={product} index={index + 1} />
         ))}

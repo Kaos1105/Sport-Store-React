@@ -7,7 +7,7 @@ import ImportSearch from './ImportSearch';
 
 const ImportList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { importRegistry } = rootStore.importStore;
+  const { importRegistry, predicate } = rootStore.importStore;
   const lstImports = Array.from(importRegistry.values());
   return (
     <Table key='table data' celled>
@@ -25,6 +25,15 @@ const ImportList: React.FC = () => {
 
       <Table.Body>
         <ImportSearch />
+        <Table.Row>
+          <Table.Cell>0</Table.Cell>
+          <Table.Cell>{predicate.get('name')}</Table.Cell>
+          <Table.Cell>{predicate.get('address')}</Table.Cell>
+          <Table.Cell>{predicate.get('phone')}</Table.Cell>
+          <Table.Cell>{predicate.get('date')}</Table.Cell>
+          <Table.Cell>{predicate.get('status')}</Table.Cell>
+          <Table.Cell></Table.Cell>
+        </Table.Row>
         {lstImports.map((importDTO, index) => (
           <ImportListItem key={importDTO.id} importDTO={importDTO} index={index + 1} />
         ))}
