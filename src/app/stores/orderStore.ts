@@ -15,18 +15,18 @@ export default class OrderStore {
     this._rootStore = rootStore;
 
     reaction(
-      () => this.predicate.keys(),
+      () => this.predicate.get('final'),
       () => {
         if (this.predicate.get('final') === 'true') {
           this.page = 1;
           this.orderRegistry.clear();
           this.loadOrders();
-          this.predicate.clear();
+          //this.predicate.clear();
         } else if (this.predicate.get('final') === 'false') {
           this.page = 1;
+          this.predicate.clear();
           this.orderRegistry.clear();
           this.loadOrders();
-          this.predicate.clear();
         }
       }
     );

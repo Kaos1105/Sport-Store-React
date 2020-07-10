@@ -14,18 +14,20 @@ export default class ProductStore {
     this._rootStore = rootStore;
 
     reaction(
-      () => this.predicate.keys(),
+      () => this.predicate.get('final'),
       () => {
+        console.log(this.predicate.get('final'));
         if (this.predicate.get('final') === 'true') {
           this.page = 1;
           this.productRegistry.clear();
           this.loadProducts();
-          this.predicate.clear();
-        } else if (this.predicate.get('final') === 'false') {
+          //this.predicate.clear();
+        }
+        if (this.predicate.get('final') === 'false') {
           this.page = 1;
+          this.predicate.clear();
           this.productRegistry.clear();
           this.loadProducts();
-          this.predicate.clear();
         }
       }
     );
