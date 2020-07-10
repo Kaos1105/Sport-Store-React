@@ -13,24 +13,23 @@ export default class ProductStore {
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
 
-    reaction(
-      () => this.predicate.get('final'),
-      () => {
-        console.log(this.predicate.get('final'));
-        if (this.predicate.get('final') === 'true') {
-          this.page = 1;
-          this.productRegistry.clear();
-          this.loadProducts();
-          //this.predicate.clear();
-        }
-        if (this.predicate.get('final') === 'false') {
-          this.page = 1;
-          this.predicate.clear();
-          this.productRegistry.clear();
-          this.loadProducts();
-        }
-      }
-    );
+    // reaction(
+    //   () => this.predicate.get('final'),
+    //   () => {
+    //     if (this.predicate.get('final') === 'true') {
+    //       this.page = 1;
+    //       this.productRegistry.clear();
+    //       this.loadProducts();
+    //       //this.predicate.clear();
+    //     }
+    //     if (this.predicate.get('final') === 'false') {
+    //       this.page = 1;
+    //       this.predicate.clear();
+    //       this.productRegistry.clear();
+    //       this.loadProducts();
+    //     }
+    //   }
+    // );
   }
 
   //Observable map
@@ -82,6 +81,14 @@ export default class ProductStore {
   }
 
   //Filtering option
+  @action loadFilters = (isReset: boolean) => {
+    this.page = 1;
+    if (isReset) {
+      this.predicate.clear();
+    }
+    this.productRegistry.clear();
+    this.loadProducts();
+  };
 
   //List
   @action loadProducts = async () => {

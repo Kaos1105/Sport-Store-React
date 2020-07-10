@@ -8,7 +8,7 @@ interface IProps {}
 
 const ProductSearch: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { setPredicate } = rootStore.productStore;
+  const { setPredicate, loadFilters } = rootStore.productStore;
   const { loadOptions, categoryOptionsRegistry, brandOptionsRegistry } = rootStore.productOptions;
 
   useEffect(() => {
@@ -67,13 +67,13 @@ const ProductSearch: React.FC<IProps> = () => {
       </Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
-          <Button color='green' onClick={() => setPredicate('final', 'true')}>
+          <Button color='green' onClick={() => loadFilters(false)}>
             <Icon name='search' />
           </Button>
           <Button
             color='grey'
             onClick={() => {
-              setPredicate('final', 'false');
+              loadFilters(true);
             }}
           >
             <Icon name='redo' />

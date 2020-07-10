@@ -7,6 +7,8 @@ import { IUser, IUserFormValues } from '../models/user';
 import { IOrderEnvelope, IOrder } from '../models/order';
 import { IImportEnvelope, IImport } from '../models/import';
 import { IShipment, IShipmentEnvelope } from '../models/shipment';
+import { IIncomeEnvelope } from '../models/income';
+import { IRevenueEnvelope } from '../models/revenue';
 // import { IUser, IUserFormValues } from '../models/user';
 // import { IProfile, IPhoto } from '../models/profile';
 
@@ -143,6 +145,16 @@ const ShipmentOptions = {
   list: (): Promise<IShipmentOption> => requests.get('/shipmentOptions'),
 };
 
+const Income = {
+  list: (params: URLSearchParams): Promise<IIncomeEnvelope> =>
+    axios.get('/statistics/income', { params: params }).then(sleep(400)).then(responseBody),
+};
+
+const Revenue = {
+  list: (params: URLSearchParams): Promise<IRevenueEnvelope> =>
+    axios.get('/statistics/revenue', { params: params }).then(sleep(400)).then(responseBody),
+};
+
 export default {
   Product,
   ProductOptions,
@@ -153,4 +165,6 @@ export default {
   ImportShipment,
   OrderShipment,
   ShipmentOptions,
+  Income,
+  Revenue,
 };

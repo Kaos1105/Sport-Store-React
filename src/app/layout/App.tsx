@@ -28,6 +28,7 @@ import ImShipmentForm from '../../features/imShipments/form/ImShipmentForm';
 import OrShipmentDashboard from '../../features/orShipments/dashboard/OrShipmentDashboard';
 import OrShipmentDetails from '../../features/orShipments/details/OrShipmentDetails';
 import OrShipmentForm from '../../features/orShipments/form/OrShipmentForm';
+import IncomeDashboard from '../../features/incomes/dashboard/IncomeDashboard';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -97,6 +98,8 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={['/orderShipmentCreate', '/orderShipment/:id/manage']}
                   component={OrShipmentForm}
                 />
+
+                <Route exact path='/income' component={IncomeDashboard} />
 
                 <Route exact path='/users/manage' component={UserList} />
 

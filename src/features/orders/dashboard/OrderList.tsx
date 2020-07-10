@@ -10,30 +10,26 @@ const OrderList: React.FC = () => {
   const { orderRegistry } = rootStore.orderStore;
   const lstOrders = Array.from(orderRegistry.values());
   return (
-    <Fragment>
-      <Item.Group divided>
-        <Table key='table data' celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Order ID</Table.HeaderCell>
-              <Table.HeaderCell>Recipient Name</Table.HeaderCell>
-              <Table.HeaderCell>Recipient Address</Table.HeaderCell>
-              <Table.HeaderCell>Recipient Phone</Table.HeaderCell>
-              <Table.HeaderCell>Placement Date</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Action</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+    <Table key='table data' celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Order ID</Table.HeaderCell>
+          <Table.HeaderCell>Recipient Name</Table.HeaderCell>
+          <Table.HeaderCell>Recipient Address</Table.HeaderCell>
+          <Table.HeaderCell>Recipient Phone</Table.HeaderCell>
+          <Table.HeaderCell>Placement Date</Table.HeaderCell>
+          <Table.HeaderCell>Status</Table.HeaderCell>
+          <Table.HeaderCell>Action</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-          <Table.Body>
-            <OrderSearch />
-            {lstOrders.map((order, index) => (
-              <OrderListItem key={order.id} order={order} index={index + 1} />
-            ))}
-          </Table.Body>
-        </Table>
-      </Item.Group>
-    </Fragment>
+      <Table.Body>
+        <OrderSearch />
+        {lstOrders.map((order, index) => (
+          <OrderListItem key={order.id} order={order} index={index + 1} />
+        ))}
+      </Table.Body>
+    </Table>
   );
 };
 

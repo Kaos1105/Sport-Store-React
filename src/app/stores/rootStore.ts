@@ -11,6 +11,9 @@ import ImportStore from './importStore';
 import ShipmentOptionsStore from './shipmentOptionsStore';
 import ImportShipmentStore from './importShipmentStore';
 import OrderShipmentStore from './orderShipmentStore';
+import IncomeStore from './incomeStore';
+import { RevealContentProps } from 'semantic-ui-react';
+import RevenueStore from './revenueStore';
 
 configure({ enforceActions: 'always' });
 
@@ -26,6 +29,8 @@ export class RootStore {
   shipmentOptions: ShipmentOptionsStore;
   importShipmentStore: ImportShipmentStore;
   orderShipmentStore: OrderShipmentStore;
+  incomeStore: IncomeStore;
+  revenueStore: RevenueStore;
 
   constructor() {
     this.productStore = new ProductStore(this);
@@ -39,6 +44,8 @@ export class RootStore {
     this.shipmentOptions = new ShipmentOptionsStore(this);
     this.importShipmentStore = new ImportShipmentStore(this);
     this.orderShipmentStore = new OrderShipmentStore(this);
+    this.incomeStore = new IncomeStore(this);
+    this.revenueStore = new RevenueStore(this);
   }
 }
 

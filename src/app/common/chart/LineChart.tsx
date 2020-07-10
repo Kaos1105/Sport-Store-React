@@ -1,15 +1,16 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 interface IProps {
   labels: string[];
   label: string;
+  p_label: string;
   data: number[];
+  p_data: number[];
   text: string;
-  color: string;
 }
 
-const BarChart: React.FC<IProps> = ({ label, labels, data, text, color }) => {
+const LineChart: React.FC<IProps> = ({ labels, label, p_label, p_data, data, text }) => {
   //   const colors = (data: number[]) => {
   //     let result: string[] = [];
   //     data.map((value, index) => {
@@ -25,16 +26,25 @@ const BarChart: React.FC<IProps> = ({ label, labels, data, text, color }) => {
     labels: labels,
     datasets: [
       {
+        fill: false,
         label: label,
-        backgroundColor: color,
-        borderColor: 'rgba(0,0,0,1)',
+        backgroundColor: 'orange',
+        borderColor: 'blue',
         borderWidth: 2,
         data: data,
+      },
+      {
+        fill: false,
+        label: p_label,
+        backgroundColor: 'red',
+        borderColor: 'green',
+        borderWidth: 2,
+        data: p_data,
       },
     ],
   };
   return (
-    <Bar
+    <Line
       data={state}
       options={{
         title: {
@@ -51,4 +61,4 @@ const BarChart: React.FC<IProps> = ({ label, labels, data, text, color }) => {
   );
 };
 
-export default BarChart;
+export default LineChart;

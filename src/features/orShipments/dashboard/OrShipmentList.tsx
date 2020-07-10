@@ -10,30 +10,26 @@ const OrShipmentList: React.FC = () => {
   const { shipmentRegistry } = rootStore.orderShipmentStore;
   const lstShipments = Array.from(shipmentRegistry.values());
   return (
-    <Fragment>
-      <Item.Group divided>
-        <Table key='table data' celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Index</Table.HeaderCell>
-              <Table.HeaderCell>Order ID</Table.HeaderCell>
-              <Table.HeaderCell>Shipment ID</Table.HeaderCell>
-              <Table.HeaderCell>Shipment Company</Table.HeaderCell>
-              <Table.HeaderCell>Shipment Status</Table.HeaderCell>
-              <Table.HeaderCell>Delivery Date</Table.HeaderCell>
-              <Table.HeaderCell>Action</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+    <Table key='table data' celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Index</Table.HeaderCell>
+          <Table.HeaderCell>Order ID</Table.HeaderCell>
+          <Table.HeaderCell>Shipment ID</Table.HeaderCell>
+          <Table.HeaderCell>Shipment Company</Table.HeaderCell>
+          <Table.HeaderCell>Shipment Status</Table.HeaderCell>
+          <Table.HeaderCell>Delivery Date</Table.HeaderCell>
+          <Table.HeaderCell>Action</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-          <Table.Body>
-            <OrShipmentSearch />
-            {lstShipments.map((shipment, index) => (
-              <OrShipmentListItem key={shipment.id} shipment={shipment} index={index + 1} />
-            ))}
-          </Table.Body>
-        </Table>
-      </Item.Group>
-    </Fragment>
+      <Table.Body>
+        <OrShipmentSearch />
+        {lstShipments.map((shipment, index) => (
+          <OrShipmentListItem key={shipment.id} shipment={shipment} index={index + 1} />
+        ))}
+      </Table.Body>
+    </Table>
   );
 };
 

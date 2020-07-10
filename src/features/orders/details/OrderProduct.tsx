@@ -51,9 +51,7 @@ const OrderProduct = () => {
                 search
                 selection
                 onChange={(e, data) => {
-                  setSelectedProduct(
-                    productRegistry.get(data.options?.find((o) => o.value === data.value)!.key)
-                  );
+                  setSelectedProduct(productRegistry.get(data.value));
                 }}
                 options={productOptionsRegistry}
               />

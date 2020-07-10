@@ -29,7 +29,7 @@ export default class OrderOptionsStore {
         products.forEach((product: IProduct) => {
           let tempProduct: IOrderProductOptions = {
             key: product.id,
-            value: product.name,
+            value: product.id,
             text: product.name,
           };
           this.productRegistry.set(product.id, product);

@@ -10,29 +10,25 @@ const ProductList: React.FC = () => {
   const { productRegistry } = rootStore.productStore;
   const lstProduct = Array.from(productRegistry.values());
   return (
-    <Fragment>
-      <Item.Group divided>
-        <Table key='table data' celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Index</Table.HeaderCell>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Category</Table.HeaderCell>
-              <Table.HeaderCell>Brand</Table.HeaderCell>
-              <Table.HeaderCell>Stock</Table.HeaderCell>
-              <Table.HeaderCell>Action</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+    <Table key='table data' celled>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Index</Table.HeaderCell>
+          <Table.HeaderCell>Name</Table.HeaderCell>
+          <Table.HeaderCell>Category</Table.HeaderCell>
+          <Table.HeaderCell>Brand</Table.HeaderCell>
+          <Table.HeaderCell>Stock</Table.HeaderCell>
+          <Table.HeaderCell>Action</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
 
-          <Table.Body>
-            <ProductSearch />
-            {lstProduct.map((product, index) => (
-              <ProductListItem key={product.id} product={product} index={index + 1} />
-            ))}
-          </Table.Body>
-        </Table>
-      </Item.Group>
-    </Fragment>
+      <Table.Body>
+        <ProductSearch />
+        {lstProduct.map((product, index) => (
+          <ProductListItem key={product.id} product={product} index={index + 1} />
+        ))}
+      </Table.Body>
+    </Table>
   );
 };
 
