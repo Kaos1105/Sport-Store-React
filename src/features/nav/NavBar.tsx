@@ -47,7 +47,7 @@ const NavBar: React.FC = () => {
             text='Statistics'
             labeled
             button
-            className='button violet icon inverted'
+            className='button purple icon inverted'
           >
             <Dropdown.Menu>
               <Dropdown.Item as={NavLink} to='/income' content='Income Statistics' />

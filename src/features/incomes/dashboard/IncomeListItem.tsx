@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
-import { Button, Label, Table, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { RootStoreContext } from '../../../app/stores/rootStore';
+import React from 'react';
+import { Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { IIncome } from '../../../app/models/income';
 

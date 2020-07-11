@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, Fragment, useState } from 'react';
-import { Grid, Table } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import OrShipmentListItemPlaceholder from './OrShipmentListItemPlaceholder';
 import OrShipmentList from './OrShipmentList';
 import PaginationOrShipment from '../../paginate/PaginationOrShipment';
-import OrShipmentSearch from './OrShipmentSearch';
 
 //pass down props from parent
 

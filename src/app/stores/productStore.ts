@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed, reaction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import { SyntheticEvent } from 'react';
 import { IProduct, IPhoto } from '../models/product';
 import agent from '../api/agent';

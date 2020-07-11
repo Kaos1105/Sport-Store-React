@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, Fragment, useState } from 'react';
-import { Grid, Table, Tab } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import ProductList from './ProductList';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import PaginationProduct from '../../paginate/PaginationProduct';
 import ProductListItemPlaceHolder from './ProductListItemPlaceHolder';
-import ProductSearch from './ProductSearch';
 
 //pass down props from parent
 

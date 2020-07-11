@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed, reaction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import { SyntheticEvent } from 'react';
 import agent from '../api/agent';
 import { history } from '../..';
@@ -14,22 +14,22 @@ export default class ImportStore {
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
 
-    reaction(
-      () => this.predicate.get('final'),
-      () => {
-        if (this.predicate.get('final') === 'true') {
-          this.page = 1;
-          this.importRegistry.clear();
-          this.loadImports();
-          //this.predicate.clear();
-        } else if (this.predicate.get('final') === 'false') {
-          this.page = 1;
-          this.predicate.clear();
-          this.importRegistry.clear();
-          this.loadImports();
-        }
-      }
-    );
+    // reaction(
+    //   () => this.predicate.get('final'),
+    //   () => {
+    //     if (this.predicate.get('final') === 'true') {
+    //       this.page = 1;
+    //       this.importRegistry.clear();
+    //       this.loadImports();
+    //       //this.predicate.clear();
+    //     } else if (this.predicate.get('final') === 'false') {
+    //       this.page = 1;
+    //       this.predicate.clear();
+    //       this.importRegistry.clear();
+    //       this.loadImports();
+    //     }
+    //   }
+    // );
   }
 
   //Observable map
@@ -110,6 +110,14 @@ export default class ImportStore {
   }
 
   //Filtering option
+  @action loadFilters = (isReset: boolean) => {
+    this.page = 1;
+    if (isReset) {
+      this.predicate.clear();
+    }
+    this.importRegistry.clear();
+    this.loadImports();
+  };
 
   //List
   @action loadImports = async () => {

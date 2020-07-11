@@ -12,7 +12,6 @@ import ShipmentOptionsStore from './shipmentOptionsStore';
 import ImportShipmentStore from './importShipmentStore';
 import OrderShipmentStore from './orderShipmentStore';
 import IncomeStore from './incomeStore';
-import { RevealContentProps } from 'semantic-ui-react';
 import RevenueStore from './revenueStore';
 
 configure({ enforceActions: 'always' });

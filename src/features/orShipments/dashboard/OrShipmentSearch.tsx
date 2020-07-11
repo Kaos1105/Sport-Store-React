@@ -10,7 +10,7 @@ interface IProps {}
 
 const OrShipmentSearch: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { setPredicate } = rootStore.orderShipmentStore;
+  const { setPredicate, loadFilters } = rootStore.orderShipmentStore;
 
   return (
     <Table.Row key='searchRow'>
@@ -74,15 +74,10 @@ const OrShipmentSearch: React.FC<IProps> = () => {
       </Table.Cell>
       <Table.Cell textAlign='center'>
         <Button.Group>
-          <Button color='green' onClick={() => setPredicate('final', 'true')}>
+          <Button color='green' onClick={() => loadFilters(false)}>
             <Icon name='search' />
           </Button>
-          <Button
-            color='grey'
-            onClick={() => {
-              setPredicate('final', 'false');
-            }}
-          >
+          <Button color='grey' onClick={() => loadFilters(true)}>
             <Icon name='redo' />
           </Button>
         </Button.Group>

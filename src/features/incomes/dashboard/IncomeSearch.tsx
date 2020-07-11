@@ -9,7 +9,7 @@ interface IProps {}
 
 const IncomeSearch: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { setPredicate, predicate } = rootStore.incomeStore;
+  const { setPredicate, loadFilters } = rootStore.incomeStore;
   const { loadOptions, productOptionsRegistry } = rootStore.orderOptions;
 
   useEffect(() => {
@@ -55,15 +55,10 @@ const IncomeSearch: React.FC<IProps> = () => {
       </Table.HeaderCell>
       <Table.HeaderCell textAlign='center'>
         <Button.Group>
-          <Button color='green' onClick={() => setPredicate('final', 'true')}>
+          <Button color='green' onClick={() => loadFilters(false)}>
             <Icon name='search' />
           </Button>
-          <Button
-            color='grey'
-            onClick={() => {
-              setPredicate('final', 'false');
-            }}
-          >
+          <Button color='grey' onClick={() => loadFilters(true)}>
             <Icon name='redo' />
           </Button>
         </Button.Group>

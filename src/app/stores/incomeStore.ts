@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed, reaction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import agent from '../api/agent';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
@@ -10,23 +10,23 @@ export default class IncomeStore {
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
 
-    reaction(
-      () => this.predicate.get('final'),
-      () => {
-        if (this.predicate.get('final') === 'true') {
-          this.page = 1;
-          this.incomeRegistry.clear();
-          this.loadIncomes();
-          //this.predicate.clear();
-        }
-        if (this.predicate.get('final') === 'false') {
-          this.page = 1;
-          this.predicate.clear();
-          this.incomeRegistry.clear();
-          this.loadIncomes();
-        }
-      }
-    );
+    // reaction(
+    //   () => this.predicate.get('final'),
+    //   () => {
+    //     if (this.predicate.get('final') === 'true') {
+    //       this.page = 1;
+    //       this.incomeRegistry.clear();
+    //       this.loadIncomes();
+    //       //this.predicate.clear();
+    //     }
+    //     if (this.predicate.get('final') === 'false') {
+    //       this.page = 1;
+    //       this.predicate.clear();
+    //       this.incomeRegistry.clear();
+    //       this.loadIncomes();
+    //     }
+    //   }
+    // );
   }
 
   //Observable map
@@ -64,6 +64,14 @@ export default class IncomeStore {
   }
 
   //Filtering option
+  @action loadFilters = (isReset: boolean) => {
+    this.page = 1;
+    if (isReset) {
+      this.predicate.clear();
+    }
+    this.incomeRegistry.clear();
+    this.loadIncomes();
+  };
 
   //List
   @action loadIncomes = async () => {

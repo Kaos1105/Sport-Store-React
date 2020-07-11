@@ -1,4 +1,4 @@
-import { observable, action, runInAction, computed, reaction } from 'mobx';
+import { observable, action, runInAction, computed } from 'mobx';
 import { SyntheticEvent } from 'react';
 import agent from '../api/agent';
 import { history } from '../..';
@@ -15,22 +15,22 @@ export default class ImportShipmentStore {
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
 
-    reaction(
-      () => this.predicate.get('final'),
-      () => {
-        if (this.predicate.get('final') === 'true') {
-          this.page = 1;
-          this.shipmentRegistry.clear();
-          this.loadShipments();
-          //this.predicate.clear();
-        } else if (this.predicate.get('final') === 'false') {
-          this.page = 1;
-          this.predicate.clear();
-          this.shipmentRegistry.clear();
-          this.loadShipments();
-        }
-      }
-    );
+    // reaction(
+    //   () => this.predicate.get('final'),
+    //   () => {
+    //     if (this.predicate.get('final') === 'true') {
+    //       this.page = 1;
+    //       this.shipmentRegistry.clear();
+    //       this.loadShipments();
+    //       //this.predicate.clear();
+    //     } else if (this.predicate.get('final') === 'false') {
+    //       this.page = 1;
+    //       this.predicate.clear();
+    //       this.shipmentRegistry.clear();
+    //       this.loadShipments();
+    //     }
+    //   }
+    // );
   }
 
   //Observable map
@@ -77,7 +77,14 @@ export default class ImportShipmentStore {
   }
 
   //Filtering option
-
+  @action loadFilters = (isReset: boolean) => {
+    this.page = 1;
+    if (isReset) {
+      this.predicate.clear();
+    }
+    this.shipmentRegistry.clear();
+    this.loadShipments();
+  };
   //List
   @action loadShipments = async () => {
     this.loadingInitial = true;

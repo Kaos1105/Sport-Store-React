@@ -76,7 +76,7 @@ const requests = {
 
 const Product = {
   list: (params: URLSearchParams): Promise<IProductEnvelope> =>
-    axios.get('/products', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/products', { params: params }).then(sleep(250)).then(responseBody),
   details: (id: string) => requests.get(`/products/${id}`),
   create: (product: IProduct) => requests.post('/products', product),
   update: (product: IProduct) => requests.put(`/products/${product.id}`, product),
@@ -107,7 +107,7 @@ const Users = {
 
 const Orders = {
   list: (params: URLSearchParams): Promise<IOrderEnvelope> =>
-    axios.get('/orders', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/orders', { params: params }).then(sleep(250)).then(responseBody),
   details: (id: string) => requests.get(`/orders/${id}`),
   create: (order: IOrder) => requests.post('/orders', order),
   update: (order: IOrder) => requests.put(`/orders/${order.id}`, order),
@@ -116,7 +116,7 @@ const Orders = {
 
 const Imports = {
   list: (params: URLSearchParams): Promise<IImportEnvelope> =>
-    axios.get('/imports', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/imports', { params: params }).then(sleep(250)).then(responseBody),
   details: (id: string) => requests.get(`/imports/${id}`),
   create: (importDTO: IImport) => requests.post('/imports', importDTO),
   update: (importDTO: IImport) => requests.put(`/imports/${importDTO.id}`, importDTO),
@@ -125,7 +125,7 @@ const Imports = {
 
 const ImportShipment = {
   list: (params: URLSearchParams): Promise<IShipmentEnvelope> =>
-    axios.get('/importShipment', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/importShipment', { params: params }).then(sleep(250)).then(responseBody),
   details: (id: string) => requests.get(`/importShipment/${id}`),
   create: (imShipment: IShipment) => requests.post('/importShipment', imShipment),
   update: (imShipment: IShipment) => requests.put(`/importShipment/${imShipment.id}`, imShipment),
@@ -134,7 +134,7 @@ const ImportShipment = {
 
 const OrderShipment = {
   list: (params: URLSearchParams): Promise<IShipmentEnvelope> =>
-    axios.get('/orderShipment', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/orderShipment', { params: params }).then(sleep(250)).then(responseBody),
   details: (id: string) => requests.get(`/orderShipment/${id}`),
   create: (orShipment: IShipment) => requests.post('/orderShipment', orShipment),
   update: (orShipment: IShipment) => requests.put(`/orderShipment/${orShipment.id}`, orShipment),
@@ -147,12 +147,12 @@ const ShipmentOptions = {
 
 const Income = {
   list: (params: URLSearchParams): Promise<IIncomeEnvelope> =>
-    axios.get('/statistics/income', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/statistics/income', { params: params }).then(sleep(250)).then(responseBody),
 };
 
 const Revenue = {
   list: (params: URLSearchParams): Promise<IRevenueEnvelope> =>
-    axios.get('/statistics/revenue', { params: params }).then(sleep(400)).then(responseBody),
+    axios.get('/statistics/revenue', { params: params }).then(sleep(250)).then(responseBody),
 };
 
 export default {

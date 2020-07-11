@@ -26,6 +26,7 @@ const LineChart: React.FC<IProps> = ({ labels, label, p_label, p_data, data, tex
     labels: labels,
     datasets: [
       {
+        lineTension: 0.2,
         fill: false,
         label: label,
         backgroundColor: 'orange',
@@ -34,6 +35,7 @@ const LineChart: React.FC<IProps> = ({ labels, label, p_label, p_data, data, tex
         data: data,
       },
       {
+        lineTension: 0.2,
         fill: false,
         label: p_label,
         backgroundColor: 'red',

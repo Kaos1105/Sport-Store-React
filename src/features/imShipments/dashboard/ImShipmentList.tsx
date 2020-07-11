@@ -1,5 +1,5 @@
-import React, { useContext, Fragment } from 'react';
-import { Item, Table } from 'semantic-ui-react';
+import React, { useContext } from 'react';
+import { Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import ImShipmentListItem from './ImShipmentListItem';
@@ -7,7 +7,7 @@ import ImShipmentSearch from './ImShipmentSearch';
 
 const ImShipmentList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { shipmentRegistry } = rootStore.importShipmentStore;
+  const { shipmentRegistry, predicate } = rootStore.importShipmentStore;
   const lstShipments = Array.from(shipmentRegistry.values());
   return (
     <Table key='table data' celled>
@@ -25,6 +25,15 @@ const ImShipmentList: React.FC = () => {
 
       <Table.Body>
         <ImShipmentSearch />
+        <Table.Row>
+          <Table.Cell>0</Table.Cell>
+          <Table.Cell>{predicate.get('importID')}</Table.Cell>
+          <Table.Cell>{predicate.get('shipmentID')}</Table.Cell>
+          <Table.Cell>{predicate.get('shipmentCompany')}</Table.Cell>
+          <Table.Cell>{predicate.get('shipmentStatus')}</Table.Cell>
+          <Table.Cell>{predicate.get('deliverDate')}</Table.Cell>
+          <Table.Cell></Table.Cell>
+        </Table.Row>
         {lstShipments.map((shipment, index) => (
           <ImShipmentListItem key={shipment.id} shipment={shipment} index={index + 1} />
         ))}
