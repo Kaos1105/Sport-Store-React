@@ -51,7 +51,7 @@ const NavBar: React.FC = () => {
           >
             <Dropdown.Menu>
               <Dropdown.Item as={NavLink} to='/income' content='Income Statistics' />
-              <Dropdown.Item as={NavLink} to='/orderShipment' content='Revenue Statistics' />
+              <Dropdown.Item as={NavLink} to='/revenue' content='Revenue Statistics' />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>

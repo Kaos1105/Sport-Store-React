@@ -3,42 +3,40 @@ import { Grid } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../../../app/stores/rootStore';
 import PaginationIncome from '../../paginate/PaginationIncome';
-import IncomeListItemPlaceHolder from './IncomeListItemPlaceHolder';
-import IncomeList from './IncomeList';
-import IncomeChart from './IncomeChart';
+import RevenueListItemPlaceHolder from './RevenueListItemPlaceHolder';
+import RevenueList from './RevenueList';
+import RevenueChart from './RevenueChart';
 
-//pass down props from parent
-
-const IncomeDashboard: React.FC = () => {
+const RevenueDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { loadIncomes, loadingInitial } = rootStore.incomeStore;
+  const { loadRevenues, loadingInitial } = rootStore.revenueStore;
 
   const [, setLoadingNext] = useState(false);
 
   const handleGetNext = () => {
     setLoadingNext(true);
-    loadIncomes().then(() => setLoadingNext(false));
+    loadRevenues().then(() => setLoadingNext(false));
   };
 
   // Similar to componentDidMount and componentDidUpdate:
   // first parameter is componentDidMount, second is componentDidUpdate with return similar to componentUnMount
   useEffect(() => {
-    loadIncomes();
-  }, [loadIncomes]);
+    loadRevenues();
+  }, [loadRevenues]);
 
   return (
     <Fragment>
       <PaginationIncome handlePageChange={handleGetNext} />
       <Grid>
         <Grid.Column width='16'>
-          {loadingInitial ? <IncomeListItemPlaceHolder /> : <IncomeList />}
+          {loadingInitial ? <RevenueListItemPlaceHolder /> : <RevenueList />}
         </Grid.Column>
       </Grid>
 
-      <IncomeChart statisticsType='Income' />
-      <IncomeChart statisticsType='Cost' />
+      <RevenueChart statisticsType='Revenue' />
+      <RevenueChart statisticsType='Quantity' />
     </Fragment>
   );
 };
 
-export default observer(IncomeDashboard);
+export default observer(RevenueDashboard);

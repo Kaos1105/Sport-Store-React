@@ -29,6 +29,7 @@ import OrShipmentDashboard from '../../features/orShipments/dashboard/OrShipment
 import OrShipmentDetails from '../../features/orShipments/details/OrShipmentDetails';
 import OrShipmentForm from '../../features/orShipments/form/OrShipmentForm';
 import IncomeDashboard from '../../features/incomes/dashboard/IncomeDashboard';
+import RevenueDashboard from '../../features/revenues/dashboard/RevenueDashboard';
 
 //------------React Hook--------------------------
 const App: React.FC<RouteComponentProps> = ({ location }) => {
@@ -100,6 +101,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 />
 
                 <Route exact path='/income' component={IncomeDashboard} />
+                <Route exact path='/revenue' component={RevenueDashboard} />
 
                 <Route exact path='/users/manage' component={UserList} />
 

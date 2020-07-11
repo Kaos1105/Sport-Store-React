@@ -13,23 +13,6 @@ export default class OrderStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
-
-    // reaction(
-    //   () => this.predicate.get('final'),
-    //   () => {
-    //     if (this.predicate.get('final') === 'true') {
-    //       this.page = 1;
-    //       this.orderRegistry.clear();
-    //       this.loadOrders();
-    //       //this.predicate.clear();
-    //     } else if (this.predicate.get('final') === 'false') {
-    //       this.page = 1;
-    //       this.predicate.clear();
-    //       this.orderRegistry.clear();
-    //       this.loadOrders();
-    //     }
-    //   }
-    //);
   }
 
   //Observable map

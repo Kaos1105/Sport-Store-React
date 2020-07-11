@@ -13,23 +13,6 @@ export default class ImportStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
-
-    // reaction(
-    //   () => this.predicate.get('final'),
-    //   () => {
-    //     if (this.predicate.get('final') === 'true') {
-    //       this.page = 1;
-    //       this.importRegistry.clear();
-    //       this.loadImports();
-    //       //this.predicate.clear();
-    //     } else if (this.predicate.get('final') === 'false') {
-    //       this.page = 1;
-    //       this.predicate.clear();
-    //       this.importRegistry.clear();
-    //       this.loadImports();
-    //     }
-    //   }
-    // );
   }
 
   //Observable map

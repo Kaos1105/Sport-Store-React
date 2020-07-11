@@ -9,25 +9,6 @@ export default class RevenueStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
-
-    reaction(
-      () => this.predicate.get('final'),
-      () => {
-        console.log(this.predicate.get('final'));
-        if (this.predicate.get('final') === 'true') {
-          this.page = 1;
-          this.revenueRegistry.clear();
-          this.loadRevenues();
-          //this.predicate.clear();
-        }
-        if (this.predicate.get('final') === 'false') {
-          this.page = 1;
-          this.predicate.clear();
-          this.revenueRegistry.clear();
-          this.loadRevenues();
-        }
-      }
-    );
   }
 
   //Observable map
@@ -65,6 +46,14 @@ export default class RevenueStore {
   }
 
   //Filtering option
+  @action loadFilters = (isReset: boolean) => {
+    this.page = 1;
+    if (isReset) {
+      this.predicate.clear();
+    }
+    this.revenueRegistry.clear();
+    this.loadRevenues();
+  };
 
   //List
   @action loadRevenues = async () => {

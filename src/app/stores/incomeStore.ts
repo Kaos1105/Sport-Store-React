@@ -9,24 +9,6 @@ export default class IncomeStore {
   _rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this._rootStore = rootStore;
-
-    // reaction(
-    //   () => this.predicate.get('final'),
-    //   () => {
-    //     if (this.predicate.get('final') === 'true') {
-    //       this.page = 1;
-    //       this.incomeRegistry.clear();
-    //       this.loadIncomes();
-    //       //this.predicate.clear();
-    //     }
-    //     if (this.predicate.get('final') === 'false') {
-    //       this.page = 1;
-    //       this.predicate.clear();
-    //       this.incomeRegistry.clear();
-    //       this.loadIncomes();
-    //     }
-    //   }
-    // );
   }
 
   //Observable map

@@ -3,7 +3,7 @@ import { Table } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { IIncome } from '../../../app/models/income';
 
-const ProductListItem: React.FC<{ income: IIncome; index: number }> = ({ income, index }) => {
+const IncomeListItem: React.FC<{ income: IIncome; index: number }> = ({ income, index }) => {
   return (
     <Table.Row key={index}>
       <Table.Cell>{income.year}</Table.Cell>
@@ -16,4 +16,4 @@ const ProductListItem: React.FC<{ income: IIncome; index: number }> = ({ income,
   );
 };
 
-export default observer(ProductListItem);
+export default observer(IncomeListItem);
