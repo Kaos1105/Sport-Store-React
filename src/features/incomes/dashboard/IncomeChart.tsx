@@ -12,7 +12,8 @@ interface IProps {
 
 const IncomeChart: React.FC<IProps> = ({ statisticsType }) => {
   const rootStore = useContext(RootStoreContext);
-  const { incomeRegistry } = rootStore.incomeStore;
+  const { incomeRegistry, predicate } = rootStore.incomeStore;
+  const { productOptionsRegistry } = rootStore.orderOptions;
   const lstIncome: IIncome[] = Array.from(incomeRegistry.values());
 
   //   const [labels, setLabels] = useState<string[]>([]);
@@ -22,6 +23,9 @@ const IncomeChart: React.FC<IProps> = ({ statisticsType }) => {
   var tempLabels: string[] = [];
   var tempData: number[] = [];
   var tempP_Data: number[] = [];
+
+  var p_name =
+    productOptionsRegistry.find((element) => element.key == predicate.get('id'))?.text || 'Product';
 
   //Line data sample
   // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -40,13 +44,13 @@ const IncomeChart: React.FC<IProps> = ({ statisticsType }) => {
           tempP_Data.push(income.productCost);
         }
       })}
-      <Grid>
-        <Grid.Column width='14'>
+      <Grid centered>
+        <Grid.Column width='12'>
           {' '}
           <LineChart
             labels={tempLabels}
             label='Total'
-            p_label='Product'
+            p_label={p_name}
             text={statisticsType + ' chart'}
             data={tempData}
             p_data={tempP_Data}

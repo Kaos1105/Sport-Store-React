@@ -11,7 +11,8 @@ import IncomeChart from './IncomeChart';
 
 const IncomeDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
-  const { loadIncomes, loadingInitial } = rootStore.incomeStore;
+  const { loadIncomes, loadingInitial, predicate } = rootStore.incomeStore;
+
   const [, setLoadingNext] = useState(false);
 
   const handleGetNext = () => {
